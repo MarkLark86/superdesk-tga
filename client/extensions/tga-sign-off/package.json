@@ -1,0 +1,14 @@
+{
+    "private": true,
+    "main": "dist/src/extension.js",
+    "scripts": {
+        "compile": "tsc -p src",
+        "compile-e2e": "echo 'No end-to-end tests defiend'",
+        "watch": "tsc -watch -p src"
+    },
+    "devDependencies": {
+        "superdesk-code-style": "1.5.0",
+        "typescript": "3.9.7",
+        "superdesk-ui-framework": "2.4.9"
+    }
+}
