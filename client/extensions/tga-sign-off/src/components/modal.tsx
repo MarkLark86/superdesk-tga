@@ -5,6 +5,7 @@ import {IEditorProps, IUserSignOff} from '../interfaces';
 import {superdesk} from '../superdesk';
 
 import {ButtonGroup, Button, Input, Checkbox} from 'superdesk-ui-framework/react';
+import {hasUserSignedOff} from '../utils';
 
 interface IProps {
     closeModal(): void
@@ -35,7 +36,7 @@ export function getUserSignOffModal(fieldProps: IEditorProps, currentUser: IUser
 
             this.state = {
                 signOff: signOff,
-                isValid: signOff.user_id != null && signOff.consent_publish && signOff.consent_disclosure,
+                isValid: hasUserSignedOff(signOff),
             };
         }
 
@@ -62,7 +63,7 @@ export function getUserSignOffModal(fieldProps: IEditorProps, currentUser: IUser
 
                 return {
                     signOff: newSignOff,
-                    isValid: newSignOff.user_id != null && newSignOff.consent_publish && newSignOff.consent_disclosure,
+                    isValid: hasUserSignedOff(newSignOff),
                 };
             });
         }

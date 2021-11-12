@@ -64,17 +64,16 @@ export class UserSignOffField extends React.Component<IEditorProps, IState> {
         const {gettext} = superdesk.localization;
         const {getCurrentUserId} = superdesk.session;
 
-        const isSignedOff = hasUserSignedOff(this.props.value);
         const isSameUser = getCurrentUserId() === this.props.value?.user_id;
 
         return (
             <div className="sd-display-flex-column">
                 <div className="sd-d-flex sd-flex-align-items-center">
                     <SignOffDetails signOff={this.props.value} />
-                    {!isSignedOff ? (
+                    {!hasUserSignedOff(this.props.value) ? (
                         <Button
-                            type={isSignedOff ? 'success' : 'warning'}
-                            icon={isSignedOff ? 'ok' : 'warning-sign'}
+                            type="warning"
+                            icon="warning-sign"
                             text={gettext('Sign Off')}
                             onClick={this.showModal}
                             expand={true}
