@@ -16,7 +16,7 @@ def generate_doi(_sender, item, updates):
     item.setdefault("extra", {})
     updates.setdefault("extra", {})
     updates["extra"]["doi"] = updates["extra"].get("doi") or item["extra"].get("doi") or _generate_short_unique_id()
-    item["extra"]["doi"] = item["extra"]["doi"]
+    item["extra"]["doi"] = updates["extra"]["doi"]
 
 
 def find_or_generate_doi(_sender, item):
