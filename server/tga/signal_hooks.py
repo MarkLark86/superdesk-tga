@@ -10,12 +10,13 @@ logger = logging.getLogger(__name__)
 CROSSREF_DOI_PREFIX = "10.54377"
 
 
-def generate_doi(_sender, item):
+def generate_doi(_sender, item, updates):
     """Assign a DOI to this item if one does not already exist"""
 
     item.setdefault("extra", {})
-    if not item["extra"].get("doi"):
-        item["extra"]["doi"] = _generate_short_unique_id()
+    updates.setdefault("extra", {})
+    updates["extra"]["doi"] = updates["extra"].get("doi") or item["extra"].get("doi") or _generate_short_unique_id()
+    item["extra"]["doi"] = item["extra"]["doi"]
 
 
 def find_or_generate_doi(_sender, item):
