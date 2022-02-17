@@ -1,8 +1,10 @@
 from uuid import uuid4
 import logging
 
-from superdesk import get_resource_service
-from superdesk.signals import item_publish
+from eve.utils import ParsedRequest, config
+from flask import json
+
+from superdesk import get_resource_service, signals
 
 logger = logging.getLogger(__name__)
 CROSSREF_DOI_PREFIX = "10.54377"
@@ -14,6 +16,26 @@ def generate_doi(_sender, item):
     item.setdefault("extra", {})
     if not item["extra"].get("doi"):
         item["extra"]["doi"] = _generate_short_unique_id()
+
+
+def find_or_generate_doi(_sender, item):
+    """Finds a DOI for this item from the ``published`` collection
+
+    If no DOI was found, then generate a new one.
+    """
+
+    item.setdefault("extra", {})
+    if item["extra"].get("doi"):
+        return
+
+    item_id = item[config.ID_FIELD]
+    for published_item in _get_published_items_for_id(item_id):
+        if (published_item.get("extra", {})).get("doi"):
+            item["extra"]["doi"] = published_item["extra"]["doi"]
+            return
+
+    logger.warning(f"Unable to find any previous DOIs to use for this article '{item_id}'")
+    item["extra"]["doi"] = _generate_short_unique_id()
 
 
 def _generate_short_unique_id():
@@ -45,5 +67,26 @@ def _doi_exists(doi):
     return get_resource_service('published').get_from_mongo(req=None, lookup={"extra.doi": doi}).count()
 
 
+def _get_published_items_for_id(item_id):
+    """Get all items in the ``published`` collection for ``item_id``"""
+
+    service = get_resource_service("published")
+    query = {
+        "query": {
+            "bool": {
+                "must": [
+                    {"term": {"item_id": item_id}}
+                ]
+            }
+        },
+        "sort": [{"versioncreated": "desc"}],
+    }
+    req = ParsedRequest()
+    req.args = {"source": json.dumps(query), "repo": "published"}
+
+    return service.get(req=req, lookup=None)
+
+
 def init_app(_app):
-    item_publish.connect(generate_doi)
+    signals.item_publish.connect(generate_doi)
+    signals.item_resend.connect(find_or_generate_doi)
