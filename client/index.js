@@ -16,4 +16,11 @@ setTimeout(() => {
     );
 });
 
-export default angular.module('main.superdesk', []);
+export default angular.module('tga', [])
+    .run(['$templateCache', ($templateCache) => {
+        // Add Crossref Transmitter Settings template
+        $templateCache.put(
+            'crossref_http_config.html',
+            require('./views/crossref_http_config.html'),
+        );
+    }]);

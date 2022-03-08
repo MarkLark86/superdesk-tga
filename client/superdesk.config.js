@@ -7,6 +7,7 @@
 module.exports = function() {
     return {
         apps: [
+            'tga',
             'superdesk.analytics',
             'superdesk-planning',
         ],

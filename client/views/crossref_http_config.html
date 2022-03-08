@@ -1,0 +1,49 @@
+<div class="sd-line-input sd-line-input--required">
+    <label class="sd-line-input__label" for="crossref_url" translate>
+        Crossref URL
+    </label>
+    <input
+        id="crossref_url"
+        type="text"
+        required
+        class="sd-line-input__input"
+        placeholder="{{ :: 'Crossref URL'|translate }}"
+        ng-model="destination.config.crossref_url"
+        ng-change="$parent.setConfig(destination)"
+    >
+    <div class="sd-line-input__hint">
+        <strong>test:</strong> https://test.crossref.org/servlet/deposit
+    </div>
+    <div class="sd-line-input__message sd-line-input__message--add-padding">
+        <strong>live:</strong> https://doi.crossref.org/servlet/deposit
+    </div>
+</div>
+<div class="sd-line-input sd-line-input--required">
+    <label class="sd-line-input__label" for="crossref_username" translate>
+        Username
+    </label>
+    <input
+        id="crossref_username"
+        type="text"
+        required
+        class="sd-line-input__input"
+        placeholder="{{ :: 'Username'|translate }}"
+        ng-model="destination.config.username"
+        ng-change="$parent.setConfig(destination)"
+    >
+</div>
+
+<div class="sd-line-input sd-line-input--required">
+    <label class="sd-line-input__label" for="crossref_password" translate>
+        Password
+    </label>
+    <input
+        id="crossref_password"
+        type="password"
+        required
+        class="sd-line-input__input"
+        placeholder="{{ :: 'Password'|translate }}"
+        ng-model="destination.config.password"
+        ng-change="$parent.setConfig(destination)"
+    >
+</div>

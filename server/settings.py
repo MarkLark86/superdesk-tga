@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "planning",
     "analytics",
     "tga.signal_hooks",
+    "tga.publish",
 ]
 
 MACROS_MODULE = env('MACROS_MODULE', 'macros')
