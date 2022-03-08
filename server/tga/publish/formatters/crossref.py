@@ -167,7 +167,10 @@ class CrossrefFormatter(Formatter):
 
             attributes = {
                 "sequence": "first" if is_first else "additional",
-                "contributor_role": author_to_contributor_role_map.get(author.get("role", "author")) or author_to_contributor_role_map["author"]
+                "contributor_role": (
+                    author_to_contributor_role_map.get(author.get("role", "author")) or
+                    author_to_contributor_role_map["author"]
+                )
             }
             is_first = False
             person = etree.SubElement(contributors, "person_name", attrib=attributes)
