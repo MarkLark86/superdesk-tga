@@ -94,10 +94,10 @@ class CrossrefFormatter(Formatter):
                     + etree.tostring(
                         cr_xml,
                         pretty_print=True,
-                        encoding=self.ENCODING,
+                        encoding="unicode",
                         inclusive_ns_prefixes=["jats"],
                         exclusive=True
-                    ).decode(self.ENCODING)
+                    )
                 )
             ]
         except Exception as ex:
