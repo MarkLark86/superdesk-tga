@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doi_batch
+    xmlns="http://www.crossref.org/schema/5.3.1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jats="http://www.ncbi.nlm.nih.gov/JATS1"
+    xmlns:fr="http://www.crossref.org/fundref.xsd"
+    xmlns:mml="http://www.w3.org/1998/Math/MathML"
+    xsi:schemaLocation="http://www.crossref.org/schema/5.3.1 https://www.crossref.org/schemas/crossref5.3.1.xsd"
+    version="5.3.1"
+>
+    <head>
+        <doi_batch_id>10.54377/f5f3-c543</doi_batch_id>
+        <timestamp>20220503232622</timestamp>
+        <depositor>
+            <depositor_name>360info</depositor_name>
+            <email_address>charis.palmer@360info.org</email_address>
+        </depositor>
+        <registrant>Monash University</registrant>
+    </head>
+    <body>
+        <report-paper>
+            <report-paper_metadata language="en">
+                <contributors>
+                    <person_name sequence="first" contributor_role="author">
+                        <given_name>Stefano</given_name>
+                        <surname>Campana</surname>
+                    </person_name>
+                    <person_name sequence="additional" contributor_role="editor">
+                        <given_name>Sarah</given_name>
+                        <surname>Bailey</surname>
+                    </person_name>
+                    <person_name sequence="additional" contributor_role="editor">
+                        <given_name>Tasha</given_name>
+                        <surname>Wibawa</surname>
+                    </person_name>
+                </contributors>
+                <titles>
+                    <title>Satellite-tracking Islamic State’s archaeological destruction</title>
+                </titles>
+                <publication_date media_type="online">
+                    <month>05</month>
+                    <day>03</day>
+                    <year>2022</year>
+                </publication_date>
+                <doi_data>
+                    <doi>10.54377/f5f3-c543</doi>
+                    <resource>https://360info.org/?doi=10.54377/f5f3-c543</resource>
+                </doi_data>
+            </report-paper_metadata>
+        </report-paper>
+    </body>
+</doi_batch>

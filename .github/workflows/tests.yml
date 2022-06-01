@@ -29,6 +29,12 @@ jobs:
         python -m pip install --upgrade pip wheel setuptools
         pip install -r dev-requirements.txt
 
+    - name: nosetests
+      run: nosetests tests
+
+    - name: initialize data
+      run: python manage.py app:initialize_data
+
   client:
 
     runs-on: ubuntu-latest
