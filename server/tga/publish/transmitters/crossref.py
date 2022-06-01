@@ -23,9 +23,9 @@ class CrossrefPushService(HTTPPushService):
         response = requests.post(
             url,
             data={
-                "operation": "doQueryUpload",
+                "operation": "doMDUpload",
                 "login_id": username,
-                "login_password": password
+                "login_passwd": password
             },
             files={"fname": item},
             timeout=app.config.get("HTTP_PUSH_TIMEOUT", (5, 30))
