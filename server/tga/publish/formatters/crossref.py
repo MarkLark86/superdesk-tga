@@ -6,7 +6,7 @@ from superdesk.publish.formatters import Formatter
 from superdesk.metadata.item import ITEM_TYPE, CONTENT_TYPE
 from superdesk.text_utils import get_text
 from superdesk.utc import utcnow
-from superdesk.errors import FormatterError, SuperdeskPublishError
+from superdesk.errors import FormatterError
 
 logger = logging.getLogger(__name__)
 
@@ -58,34 +58,7 @@ class CrossrefFormatter(Formatter):
         try:
             self.subscriber = subscriber
             pub_seq_num = get_resource_service("subscribers").generate_sequence_number(subscriber)
-
-            cr_xml = etree.Element(
-                "doi_batch",
-                attrib=CrossrefFormatter.debug_message_extra,
-                nsmap=CrossrefFormatter.message_nsmap
-            )
-            self._format_header(cr_xml, article)
-
-            body_xml = etree.SubElement(cr_xml, "body")
-
-            journal = etree.SubElement(body_xml, "journal")
-            language = article.get("language", "en")
-            journal_metadata = etree.SubElement(journal, "journal_metadata", attrib={
-                "language": language,
-                "reference_distribution_opts": "any",
-            })
-            self._format_journal_metadata(journal_metadata, article)
-            journal_article = etree.SubElement(journal, "journal_article", attrib={
-                "language": language,
-                "publication_type": "full_text",
-                "reference_distribution_opts": "any",
-            })
-
-            self._format_titles(journal_article, article)
-            self._format_contributors(journal_article, article)
-            self._format_dates(journal_article, article)
-            self._format_archive_locations(journal_article, article)
-            self._format_doi_data(journal_article, article)
+            cr_xml = self._gen_xml(article)
 
             return [
                 (
@@ -103,6 +76,30 @@ class CrossrefFormatter(Formatter):
         except Exception as ex:
             raise FormatterError(25000, ex, subscriber)
 
+    def _gen_xml(self, article):
+        cr_xml = etree.Element(
+            "doi_batch",
+            attrib=CrossrefFormatter.debug_message_extra,
+            nsmap=CrossrefFormatter.message_nsmap
+        )
+        self._format_header(cr_xml, article)
+
+        body_xml = etree.SubElement(cr_xml, "body")
+
+        report_paper = etree.SubElement(body_xml, "report-paper")
+        report_paper_metadata = etree.SubElement(
+            report_paper,
+            "report-paper_metadata",
+            attrib={"language": article.get("language", "en")}
+        )
+
+        self._format_titles(report_paper_metadata, article)
+        self._format_contributors(report_paper_metadata, article)
+        self._format_dates(report_paper_metadata, article)
+        self._format_doi_data(report_paper_metadata, article)
+
+        return cr_xml
+
     def _format_header(self, cr_xml, article):
         now = utcnow()
         head = etree.SubElement(cr_xml, "head")
@@ -112,10 +109,6 @@ class CrossrefFormatter(Formatter):
         etree.SubElement(depositor, "depositor_name").text = DEPOSITOR_INFO["name"]
         etree.SubElement(depositor, "email_address").text = DEPOSITOR_INFO["email"]
         etree.SubElement(head, "registrant").text = DEPOSITOR_INFO["registrant"]
-
-    def _format_journal_metadata(self, journal_metadata, article):
-        etree.SubElement(journal_metadata, "full_title").text = get_text(article.get("headline"))
-        self._format_archive_locations(journal_metadata, article)
 
     def _format_titles(self, xml_node, article):
         titles = etree.SubElement(xml_node, "titles")
@@ -128,18 +121,11 @@ class CrossrefFormatter(Formatter):
         etree.SubElement(posted_date, "day").text = publish_date.strftime("%d")
         etree.SubElement(posted_date, "year").text = publish_date.strftime("%Y")
 
-    def _format_archive_locations(self, xml_node, article):
-        archive_locations = etree.SubElement(xml_node, "archive_locations")
-        etree.SubElement(archive_locations, "archive", attrib={"name": "Internet Archive"})
-
     def _format_doi_data(self, xml_node, article):
         doi_data = etree.SubElement(xml_node, "doi_data")
         doi = (article.get("extra") or {}).get("doi")
         etree.SubElement(doi_data, "doi").text = doi
-        etree.SubElement(doi_data, "resource", attrib={
-            "content_version": "vor",
-            "mime_type": "text/html",
-        }).text = PUBLIC_DOI_URL_PREFIX + doi
+        etree.SubElement(doi_data, "resource").text = PUBLIC_DOI_URL_PREFIX + doi
 
     def _format_contributors(self, xml_node, article):
         if not article.get("authors"):
