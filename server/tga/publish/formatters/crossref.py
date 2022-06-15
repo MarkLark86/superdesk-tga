@@ -1,5 +1,6 @@
 from lxml import etree
 import logging
+from bson import ObjectId
 
 from superdesk import get_resource_service
 from superdesk.publish.formatters import Formatter
@@ -93,8 +94,8 @@ class CrossrefFormatter(Formatter):
             attrib={"language": article.get("language", "en")}
         )
 
-        self._format_titles(report_paper_metadata, article)
         self._format_contributors(report_paper_metadata, article)
+        self._format_titles(report_paper_metadata, article)
         self._format_dates(report_paper_metadata, article)
         self._format_doi_data(report_paper_metadata, article)
 
@@ -103,7 +104,7 @@ class CrossrefFormatter(Formatter):
     def _format_header(self, cr_xml, article):
         now = utcnow()
         head = etree.SubElement(cr_xml, "head")
-        etree.SubElement(head, "doi_batch_id").text = article.get("extra", {}).get("doi")
+        etree.SubElement(head, "doi_batch_id").text = str(ObjectId())
         etree.SubElement(head, "timestamp").text = now.strftime("%Y%m%d%H%M%S")
         depositor = etree.SubElement(head, "depositor")
         etree.SubElement(depositor, "depositor_name").text = DEPOSITOR_INFO["name"]
