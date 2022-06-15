@@ -8,6 +8,7 @@ from tga.publish.formatters.crossref import CrossrefFormatter
 USER_1_ID = ObjectId()
 USER_2_ID = ObjectId()
 USER_3_ID = ObjectId()
+doi_batch_id = ObjectId()
 
 
 class CrossrefFormatterTest(TestCase):
@@ -28,7 +29,8 @@ class CrossrefFormatterTest(TestCase):
         }])
 
     @patch("tga.publish.formatters.crossref.utcnow", return_value=datetime(2022, 5, 31, 13, 0, 0))
-    def test_xml_format(self, _utcnow):
+    @patch("tga.publish.formatters.crossref.ObjectId", return_value=doi_batch_id)
+    def test_xml_format(self, _object_id, _utcnow):
         article = {
             "_id": "urn:localhost.abc",
             "guid": "urn:localhost.abc",
@@ -73,7 +75,7 @@ class CrossrefFormatterTest(TestCase):
         self.assertEqual(xml.tag, "doi_batch")
         self.assertEqual(xml.attrib["version"], "5.3.1")
 
-        self.assertEqual(xml.find("head/doi_batch_id").text, "10.54377/f5f3-c543")
+        self.assertEqual(xml.find("head/doi_batch_id").text, str(doi_batch_id))
         self.assertEqual(xml.find("head/timestamp").text, "20220531130000")
 
         metadata = xml.find("body/report-paper/report-paper_metadata")
