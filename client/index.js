@@ -10,6 +10,10 @@ setTimeout(() => {
             {
                 id: 'tga-sign-off',
                 load: () => import('./extensions/tga-sign-off'),
+            },
+            {
+                id: 'tga-author-profile-fields',
+                load: () => import('./extensions/tga-author-profile-fields'),
             }
         ],
         {},
