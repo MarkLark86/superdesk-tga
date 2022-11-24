@@ -5,6 +5,7 @@ from eve.utils import ParsedRequest, config
 from flask import json
 
 from superdesk import get_resource_service, signals
+from .author_profiles import update_author_profile_content
 
 logger = logging.getLogger(__name__)
 CROSSREF_DOI_PREFIX = "10.54377"
@@ -45,7 +46,7 @@ def _generate_short_unique_id():
     runs = 0
     while runs < 100:
         doi_id = str(uuid4())[:8]
-        doi = CROSSREF_DOI_PREFIX + '/' + doi_id[:4] + '-' + doi_id[4:]
+        doi = CROSSREF_DOI_PREFIX + "/" + doi_id[:4] + "-" + doi_id[4:]
         if not _doi_exists(doi):
             return doi
 
@@ -65,7 +66,7 @@ def _doi_exists(doi):
     # Use MongoDB as searching for ``extra.doi`` in Elastic won't work
     # There will not be a huge amount of content created from this system
     # So there should be no need for an index here
-    return get_resource_service('published').get_from_mongo(req=None, lookup={"extra.doi": doi}).count()
+    return get_resource_service("published").get_from_mongo(req=None, lookup={"extra.doi": doi}).count()
 
 
 def _get_published_items_for_id(item_id):
@@ -73,13 +74,7 @@ def _get_published_items_for_id(item_id):
 
     service = get_resource_service("published")
     query = {
-        "query": {
-            "bool": {
-                "must": [
-                    {"term": {"item_id": item_id}}
-                ]
-            }
-        },
+        "query": {"bool": {"must": [{"term": {"item_id": item_id}}]}},
         "sort": [{"versioncreated": "desc"}],
     }
     req = ParsedRequest()
@@ -91,3 +86,4 @@ def _get_published_items_for_id(item_id):
 def init_app(_app):
     signals.item_publish.connect(generate_doi)
     signals.item_resend.connect(find_or_generate_doi)
+    signals.item_update.connect(update_author_profile_content)
