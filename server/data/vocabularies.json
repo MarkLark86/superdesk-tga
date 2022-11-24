@@ -424,1241 +424,1525 @@
         "display_name": "Countries",
         "type": "manageable",
         "unique_field": "qcode",
+        "init_version": 2,
+        "schema": {
+            "qcode": {},
+            "name": {},
+            "is_active": {},
+            "region": {}
+        },
         "items": [
             {
                 "is_active": true,
+                "name": "Afghanistan",
                 "qcode": "AFG",
-                "name": "Afghanistan"
+                "region": "South Asia"
             },
             {
                 "is_active": true,
+                "name": "Aland Islands",
                 "qcode": "ALA",
-                "name": "Aland Islands"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Albania",
                 "qcode": "ALB",
-                "name": "Albania"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Algeria",
                 "qcode": "DZA",
-                "name": "Algeria"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "American Samoa",
                 "qcode": "ASM",
-                "name": "American Samoa"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Andorra",
                 "qcode": "AND",
-                "name": "Andorra"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Angola",
                 "qcode": "AGO",
-                "name": "Angola"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Anguilla",
                 "qcode": "AIA",
-                "name": "Anguilla"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Antarctica",
                 "qcode": "ATA",
-                "name": "Antarctica"
+                "region": "Antarctica"
             },
             {
                 "is_active": true,
+                "name": "Antigua and Barbuda",
                 "qcode": "ATG",
-                "name": "Antigua and Barbuda"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Argentina",
                 "qcode": "ARG",
-                "name": "Argentina"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Armenia",
                 "qcode": "ARM",
-                "name": "Armenia"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Aruba",
                 "qcode": "ABW",
-                "name": "Aruba"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Australia",
                 "qcode": "AUS",
-                "name": "Australia"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Austria",
                 "qcode": "AUT",
-                "name": "Austria"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Azerbaijan",
                 "qcode": "AZE",
-                "name": "Azerbaijan"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "The Bahamas",
                 "qcode": "BHS",
-                "name": "Bahamas"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Bahrain",
                 "qcode": "BHR",
-                "name": "Bahrain"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "Bangladesh",
                 "qcode": "BGD",
-                "name": "Bangladesh"
+                "region": "South Asia"
             },
             {
                 "is_active": true,
+                "name": "Barbados",
                 "qcode": "BRB",
-                "name": "Barbados"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Belarus",
                 "qcode": "BLR",
-                "name": "Belarus"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Belgium",
                 "qcode": "BEL",
-                "name": "Belgium"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Belize",
                 "qcode": "BLZ",
-                "name": "Belize"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Benin",
                 "qcode": "BEN",
-                "name": "Benin"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Bermuda",
                 "qcode": "BMU",
-                "name": "Bermuda"
+                "region": "North America"
             },
             {
                 "is_active": true,
+                "name": "Bhutan",
                 "qcode": "BTN",
-                "name": "Bhutan"
+                "region": "South Asia"
             },
             {
                 "is_active": true,
+                "name": "Bolivia",
                 "qcode": "BOL",
-                "name": "Bolivia"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Bosnia and Herzegovina",
                 "qcode": "BIH",
-                "name": "Bosnia and Herzegovina"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Botswana",
                 "qcode": "BWA",
-                "name": "Botswana"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Bouvet Island",
                 "qcode": "BVT",
-                "name": "Bouvet Island"
+                "region": "Antarctica"
             },
             {
                 "is_active": true,
+                "name": "Brazil",
                 "qcode": "BRA",
-                "name": "Brazil"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "British Virgin Islands",
                 "qcode": "VGB",
-                "name": "British Virgin Islands"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "British Indian Ocean Territory",
                 "qcode": "IOT",
-                "name": "British Indian Ocean Territory"
+                "region": "South Asia"
             },
             {
                 "is_active": true,
+                "name": "Brunei Darussalam",
                 "qcode": "BRN",
-                "name": "Brunei Darussalam"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Bulgaria",
                 "qcode": "BGR",
-                "name": "Bulgaria"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Burkina Faso",
                 "qcode": "BFA",
-                "name": "Burkina Faso"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Burundi",
                 "qcode": "BDI",
-                "name": "Burundi"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Cambodia",
                 "qcode": "KHM",
-                "name": "Cambodia"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Cameroon",
                 "qcode": "CMR",
-                "name": "Cameroon"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Canada",
                 "qcode": "CAN",
-                "name": "Canada"
+                "region": "North America"
             },
             {
                 "is_active": true,
+                "name": "Cabo Verde",
                 "qcode": "CPV",
-                "name": "Cape Verde"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Cayman Islands",
                 "qcode": "CYM",
-                "name": "Cayman Islands"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Central African Republic",
                 "qcode": "CAF",
-                "name": "Central African Republic"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Chad",
                 "qcode": "TCD",
-                "name": "Chad"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Chile",
                 "qcode": "CHL",
-                "name": "Chile"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "China",
                 "qcode": "CHN",
-                "name": "China"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Hong Kong SAR, China",
                 "qcode": "HKG",
-                "name": "Hong Kong, SAR China"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Macao SAR, China",
                 "qcode": "MAC",
-                "name": "Macao, SAR China"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Christmas Island",
                 "qcode": "CXR",
-                "name": "Christmas Island"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Cocos (Keeling) Islands",
                 "qcode": "CCK",
-                "name": "Cocos (Keeling) Islands"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Colombia",
                 "qcode": "COL",
-                "name": "Colombia"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Comoros",
                 "qcode": "COM",
-                "name": "Comoros"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Congo, Rep.",
                 "qcode": "COG",
-                "name": "Congo (Brazzaville)"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Congo, Dem. Rep.",
                 "qcode": "COD",
-                "name": "Congo, (Kinshasa)"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Cook Islands",
                 "qcode": "COK",
-                "name": "Cook Islands"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Costa Rica",
                 "qcode": "CRI",
-                "name": "Costa Rica"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "C\u00f4te d'Ivoire",
                 "qcode": "CIV",
-                "name": "CÃ´te d'Ivoire"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Croatia",
                 "qcode": "HRV",
-                "name": "Croatia"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Cuba",
                 "qcode": "CUB",
-                "name": "Cuba"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Cyprus",
                 "qcode": "CYP",
-                "name": "Cyprus"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Czech Republic",
                 "qcode": "CZE",
-                "name": "Czech Republic"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Denmark",
                 "qcode": "DNK",
-                "name": "Denmark"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Djibouti",
                 "qcode": "DJI",
-                "name": "Djibouti"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "Dominica",
                 "qcode": "DMA",
-                "name": "Dominica"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Dominican Republic",
                 "qcode": "DOM",
-                "name": "Dominican Republic"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Ecuador",
                 "qcode": "ECU",
-                "name": "Ecuador"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Egypt, Arab Rep.",
                 "qcode": "EGY",
-                "name": "Egypt"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "El Salvador",
                 "qcode": "SLV",
-                "name": "El Salvador"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Equatorial Guinea",
                 "qcode": "GNQ",
-                "name": "Equatorial Guinea"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Eritrea",
                 "qcode": "ERI",
-                "name": "Eritrea"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Estonia",
                 "qcode": "EST",
-                "name": "Estonia"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Ethiopia",
                 "qcode": "ETH",
-                "name": "Ethiopia"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Falkland Islands (Malvinas)",
                 "qcode": "FLK",
-                "name": "Falkland Islands (Malvinas)"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Faeroe Islands",
                 "qcode": "FRO",
-                "name": "Faroe Islands"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Fiji",
                 "qcode": "FJI",
-                "name": "Fiji"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Finland",
                 "qcode": "FIN",
-                "name": "Finland"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "France",
                 "qcode": "FRA",
-                "name": "France"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "French Guiana",
                 "qcode": "GUF",
-                "name": "French Guiana"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "French Polynesia",
                 "qcode": "PYF",
-                "name": "French Polynesia"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "French Southern Territories",
                 "qcode": "ATF",
-                "name": "French Southern Territories"
+                "region": "Antarctica"
             },
             {
                 "is_active": true,
+                "name": "Gabon",
                 "qcode": "GAB",
-                "name": "Gabon"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Gambia, The",
                 "qcode": "GMB",
-                "name": "Gambia"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Georgia",
                 "qcode": "GEO",
-                "name": "Georgia"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Germany",
                 "qcode": "DEU",
-                "name": "Germany"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Ghana",
                 "qcode": "GHA",
-                "name": "Ghana"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Gibraltar",
                 "qcode": "GIB",
-                "name": "Gibraltar"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Greece",
                 "qcode": "GRC",
-                "name": "Greece"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Greenland",
                 "qcode": "GRL",
-                "name": "Greenland"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Grenada",
                 "qcode": "GRD",
-                "name": "Grenada"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Guadeloupe",
                 "qcode": "GLP",
-                "name": "Guadeloupe"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Guam",
                 "qcode": "GUM",
-                "name": "Guam"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Guatemala",
                 "qcode": "GTM",
-                "name": "Guatemala"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Guernsey",
                 "qcode": "GGY",
-                "name": "Guernsey"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Guinea",
                 "qcode": "GIN",
-                "name": "Guinea"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Guinea-Bissau",
                 "qcode": "GNB",
-                "name": "Guinea-Bissau"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Guyana",
                 "qcode": "GUY",
-                "name": "Guyana"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Haiti",
                 "qcode": "HTI",
-                "name": "Haiti"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Heard and Mcdonald Islands",
                 "qcode": "HMD",
-                "name": "Heard and Mcdonald Islands"
+                "region": "Antarctica"
             },
             {
                 "is_active": true,
+                "name": "Holy See (Vatican City State)",
                 "qcode": "VAT",
-                "name": "Holy See (Vatican City State)"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Honduras",
                 "qcode": "HND",
-                "name": "Honduras"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Hungary",
                 "qcode": "HUN",
-                "name": "Hungary"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Iceland",
                 "qcode": "ISL",
-                "name": "Iceland"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "India",
                 "qcode": "IND",
-                "name": "India"
+                "region": "South Asia"
             },
             {
                 "is_active": true,
+                "name": "Indonesia",
                 "qcode": "IDN",
-                "name": "Indonesia"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Iran, Islamic Rep.",
                 "qcode": "IRN",
-                "name": "Iran, Islamic Republic of"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "Iraq",
                 "qcode": "IRQ",
-                "name": "Iraq"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "Ireland",
                 "qcode": "IRL",
-                "name": "Ireland"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Isle of Man",
                 "qcode": "IMN",
-                "name": "Isle of Man"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Israel",
                 "qcode": "ISR",
-                "name": "Israel"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "Italy",
                 "qcode": "ITA",
-                "name": "Italy"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Jamaica",
                 "qcode": "JAM",
-                "name": "Jamaica"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Japan",
                 "qcode": "JPN",
-                "name": "Japan"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Jersey",
                 "qcode": "JEY",
-                "name": "Jersey"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Jordan",
                 "qcode": "JOR",
-                "name": "Jordan"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "Kazakhstan",
                 "qcode": "KAZ",
-                "name": "Kazakhstan"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Kenya",
                 "qcode": "KEN",
-                "name": "Kenya"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Kiribati",
                 "qcode": "KIR",
-                "name": "Kiribati"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Korea, Dem. Rep.",
                 "qcode": "PRK",
-                "name": "Korea (North)"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Korea, Rep.",
                 "qcode": "KOR",
-                "name": "Korea (South)"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Kuwait",
                 "qcode": "KWT",
-                "name": "Kuwait"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "Kyrgyz Republic",
                 "qcode": "KGZ",
-                "name": "Kyrgyzstan"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Lao PDR",
                 "qcode": "LAO",
-                "name": "Lao PDR"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Latvia",
                 "qcode": "LVA",
-                "name": "Latvia"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Lebanon",
                 "qcode": "LBN",
-                "name": "Lebanon"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "Lesotho",
                 "qcode": "LSO",
-                "name": "Lesotho"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Liberia",
                 "qcode": "LBR",
-                "name": "Liberia"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Libya",
                 "qcode": "LBY",
-                "name": "Libya"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "Liechtenstein",
                 "qcode": "LIE",
-                "name": "Liechtenstein"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Lithuania",
                 "qcode": "LTU",
-                "name": "Lithuania"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Luxembourg",
                 "qcode": "LUX",
-                "name": "Luxembourg"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "North Macedonia",
                 "qcode": "MKD",
-                "name": "Macedonia, Republic of"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Madagascar",
                 "qcode": "MDG",
-                "name": "Madagascar"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Malawi",
                 "qcode": "MWI",
-                "name": "Malawi"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Malaysia",
                 "qcode": "MYS",
-                "name": "Malaysia"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Maldives",
                 "qcode": "MDV",
-                "name": "Maldives"
+                "region": "South Asia"
             },
             {
                 "is_active": true,
+                "name": "Mali",
                 "qcode": "MLI",
-                "name": "Mali"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Malta",
                 "qcode": "MLT",
-                "name": "Malta"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "Marshall Islands",
                 "qcode": "MHL",
-                "name": "Marshall Islands"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Martinique",
                 "qcode": "MTQ",
-                "name": "Martinique"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Mauritania",
                 "qcode": "MRT",
-                "name": "Mauritania"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Mauritius",
                 "qcode": "MUS",
-                "name": "Mauritius"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Mayotte",
                 "qcode": "MYT",
-                "name": "Mayotte"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Mexico",
                 "qcode": "MEX",
-                "name": "Mexico"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Micronesia, Fed. Sts.",
                 "qcode": "FSM",
-                "name": "Micronesia, Federated States of"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Moldova",
                 "qcode": "MDA",
-                "name": "Moldova"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Monaco",
                 "qcode": "MCO",
-                "name": "Monaco"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Mongolia",
                 "qcode": "MNG",
-                "name": "Mongolia"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Montenegro",
                 "qcode": "MNE",
-                "name": "Montenegro"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Montserrat",
                 "qcode": "MSR",
-                "name": "Montserrat"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Morocco",
                 "qcode": "MAR",
-                "name": "Morocco"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "Mozambique",
                 "qcode": "MOZ",
-                "name": "Mozambique"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Myanmar",
                 "qcode": "MMR",
-                "name": "Myanmar"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Namibia",
                 "qcode": "NAM",
-                "name": "Namibia"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Nauru",
                 "qcode": "NRU",
-                "name": "Nauru"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Nepal",
                 "qcode": "NPL",
-                "name": "Nepal"
+                "region": "South Asia"
             },
             {
                 "is_active": true,
+                "name": "Netherlands",
                 "qcode": "NLD",
-                "name": "Netherlands"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Netherlands Antilles",
                 "qcode": "ANT",
-                "name": "Netherlands Antilles"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "New Caledonia",
                 "qcode": "NCL",
-                "name": "New Caledonia"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "New Zealand",
                 "qcode": "NZL",
-                "name": "New Zealand"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Nicaragua",
                 "qcode": "NIC",
-                "name": "Nicaragua"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Niger",
                 "qcode": "NER",
-                "name": "Niger"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Nigeria",
                 "qcode": "NGA",
-                "name": "Nigeria"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Niue",
                 "qcode": "NIU",
-                "name": "Niue"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Norfolk Island",
                 "qcode": "NFK",
-                "name": "Norfolk Island"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Northern Mariana Islands",
                 "qcode": "MNP",
-                "name": "Northern Mariana Islands"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Norway",
                 "qcode": "NOR",
-                "name": "Norway"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Oman",
                 "qcode": "OMN",
-                "name": "Oman"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "Pakistan",
                 "qcode": "PAK",
-                "name": "Pakistan"
+                "region": "South Asia"
             },
             {
                 "is_active": true,
+                "name": "Palau",
                 "qcode": "PLW",
-                "name": "Palau"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Palestinian Territory",
                 "qcode": "PSE",
-                "name": "Palestinian Territory"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Panama",
                 "qcode": "PAN",
-                "name": "Panama"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Papua New Guinea",
                 "qcode": "PNG",
-                "name": "Papua New Guinea"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Paraguay",
                 "qcode": "PRY",
-                "name": "Paraguay"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Peru",
                 "qcode": "PER",
-                "name": "Peru"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Philippines",
                 "qcode": "PHL",
-                "name": "Philippines"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Pitcairn",
                 "qcode": "PCN",
-                "name": "Pitcairn"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Poland",
                 "qcode": "POL",
-                "name": "Poland"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Portugal",
                 "qcode": "PRT",
-                "name": "Portugal"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Puerto Rico",
                 "qcode": "PRI",
-                "name": "Puerto Rico"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Qatar",
                 "qcode": "QAT",
-                "name": "Qatar"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "R\u00e9union",
                 "qcode": "REU",
-                "name": "RÃ©union"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Romania",
                 "qcode": "ROU",
-                "name": "Romania"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Russian Federation",
                 "qcode": "RUS",
-                "name": "Russian Federation"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Rwanda",
                 "qcode": "RWA",
-                "name": "Rwanda"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Saint Barth\u00e9lemy",
                 "qcode": "BLM",
-                "name": "Saint-BarthÃ©lemy"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Saint Helena",
                 "qcode": "SHN",
-                "name": "Saint Helena"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "St. Kitts and Nevis",
                 "qcode": "KNA",
-                "name": "Saint Kitts and Nevis"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "St. Lucia",
                 "qcode": "LCA",
-                "name": "Saint Lucia"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "St. Martin (French part)",
                 "qcode": "MAF",
-                "name": "Saint-Martin (French part)"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Saint Pierre and Miquelon",
                 "qcode": "SPM",
-                "name": "Saint Pierre and Miquelon"
+                "region": "North America"
             },
             {
                 "is_active": true,
+                "name": "St. Vincent and the Grenadines",
                 "qcode": "VCT",
-                "name": "Saint Vincent and Grenadines"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Samoa",
                 "qcode": "WSM",
-                "name": "Samoa"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "San Marino",
                 "qcode": "SMR",
-                "name": "San Marino"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Sao Tome and Principe",
                 "qcode": "STP",
-                "name": "Sao Tome and Principe"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Saudi Arabia",
                 "qcode": "SAU",
-                "name": "Saudi Arabia"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "Senegal",
                 "qcode": "SEN",
-                "name": "Senegal"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Serbia",
                 "qcode": "SRB",
-                "name": "Serbia"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Seychelles",
                 "qcode": "SYC",
-                "name": "Seychelles"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Sierra Leone",
                 "qcode": "SLE",
-                "name": "Sierra Leone"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Singapore",
                 "qcode": "SGP",
-                "name": "Singapore"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Slovak Republic",
                 "qcode": "SVK",
-                "name": "Slovakia"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Slovenia",
                 "qcode": "SVN",
-                "name": "Slovenia"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Solomon Islands",
                 "qcode": "SLB",
-                "name": "Solomon Islands"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Somalia",
                 "qcode": "SOM",
-                "name": "Somalia"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "South Africa",
                 "qcode": "ZAF",
-                "name": "South Africa"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "South Georgia and the South Sandwich Islands",
                 "qcode": "SGS",
-                "name": "South Georgia and the South Sandwich Islands"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "South Sudan",
                 "qcode": "SSD",
-                "name": "South Sudan"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Spain",
                 "qcode": "ESP",
-                "name": "Spain"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Sri Lanka",
                 "qcode": "LKA",
-                "name": "Sri Lanka"
+                "region": "South Asia"
             },
             {
                 "is_active": true,
+                "name": "Sudan",
                 "qcode": "SDN",
-                "name": "Sudan"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Suriname",
                 "qcode": "SUR",
-                "name": "Suriname"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Svalbard and Jan Mayen Islands",
                 "qcode": "SJM",
-                "name": "Svalbard and Jan Mayen Islands"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Eswatini",
                 "qcode": "SWZ",
-                "name": "Swaziland"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Sweden",
                 "qcode": "SWE",
-                "name": "Sweden"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Switzerland",
                 "qcode": "CHE",
-                "name": "Switzerland"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Syrian Arab Republic",
                 "qcode": "SYR",
-                "name": "Syrian Arab Republic (Syria)"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "Taiwan, Republic of China",
                 "qcode": "TWN",
-                "name": "Taiwan, Republic of China"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Tajikistan",
                 "qcode": "TJK",
-                "name": "Tajikistan"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Tanzania",
                 "qcode": "TZA",
-                "name": "Tanzania, United Republic of"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Thailand",
                 "qcode": "THA",
-                "name": "Thailand"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Timor-Leste",
                 "qcode": "TLS",
-                "name": "Timor-Leste"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Togo",
                 "qcode": "TGO",
-                "name": "Togo"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Tokelau",
                 "qcode": "TKL",
-                "name": "Tokelau"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Tonga",
                 "qcode": "TON",
-                "name": "Tonga"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Trinidad and Tobago",
                 "qcode": "TTO",
-                "name": "Trinidad and Tobago"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Tunisia",
                 "qcode": "TUN",
-                "name": "Tunisia"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "Turkey",
                 "qcode": "TUR",
-                "name": "Turkey"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Turkmenistan",
                 "qcode": "TKM",
-                "name": "Turkmenistan"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Turks and Caicos Islands",
                 "qcode": "TCA",
-                "name": "Turks and Caicos Islands"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Tuvalu",
                 "qcode": "TUV",
-                "name": "Tuvalu"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Uganda",
                 "qcode": "UGA",
-                "name": "Uganda"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Ukraine",
                 "qcode": "UKR",
-                "name": "Ukraine"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "United Arab Emirates",
                 "qcode": "ARE",
-                "name": "United Arab Emirates"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "United Kingdom",
                 "qcode": "GBR",
-                "name": "United Kingdom"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "United States",
                 "qcode": "USA",
-                "name": "United States of America"
+                "region": "North America"
             },
             {
                 "is_active": true,
+                "name": "US Minor Outlying Islands",
                 "qcode": "UMI",
-                "name": "US Minor Outlying Islands"
+                "region": "North America"
             },
             {
                 "is_active": true,
+                "name": "Uruguay",
                 "qcode": "URY",
-                "name": "Uruguay"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Uzbekistan",
                 "qcode": "UZB",
-                "name": "Uzbekistan"
+                "region": "Europe & Central Asia"
             },
             {
                 "is_active": true,
+                "name": "Vanuatu",
                 "qcode": "VUT",
-                "name": "Vanuatu"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Venezuela, RB",
                 "qcode": "VEN",
-                "name": "Venezuela (Bolivarian Republic)"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Vietnam",
                 "qcode": "VNM",
-                "name": "Viet Nam"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Virgin Islands (U.S.)",
                 "qcode": "VIR",
-                "name": "Virgin Islands, US"
+                "region": "Latin America & Caribbean"
             },
             {
                 "is_active": true,
+                "name": "Wallis and Futuna Islands",
                 "qcode": "WLF",
-                "name": "Wallis and Futuna Islands"
+                "region": "East Asia & Pacific"
             },
             {
                 "is_active": true,
+                "name": "Western Sahara",
                 "qcode": "ESH",
-                "name": "Western Sahara"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "Yemen, Rep.",
                 "qcode": "YEM",
-                "name": "Yemen"
+                "region": "Middle East & North Africa"
             },
             {
                 "is_active": true,
+                "name": "Zambia",
                 "qcode": "ZMB",
-                "name": "Zambia"
+                "region": "Sub-Saharan Africa"
             },
             {
                 "is_active": true,
+                "name": "Zimbabwe",
                 "qcode": "ZWE",
-                "name": "Zimbabwe"
+                "region": "Sub-Saharan Africa"
+            },
+            {
+                "is_active": true,
+                "name": "Channel Islands",
+                "qcode": "CHI",
+                "region": "Europe & Central Asia"
+            },
+            {
+                "is_active": true,
+                "name": "Curacao",
+                "qcode": "CUR",
+                "region": "Latin America & Caribbean"
+            },
+            {
+                "is_active": true,
+                "name": "West Bank and Gaza",
+                "qcode": "WBG",
+                "region": "Middle East & North Africa"
+            },
+            {
+                "is_active": true,
+                "name": "Sint Maarten (Dutch part)",
+                "qcode": "SMD",
+                "region": "Latin America & Caribbean"
+            },
+            {
+                "is_active": true,
+                "name": "Kosovo",
+                "qcode": "KOS",
+                "region": "Europe & Central Asia"
             }
         ]
     },
@@ -2327,5 +2611,116 @@
             "name": "Low",
             "qcode": 3
         }]
+    },
+    {
+        "_id": "age_group",
+        "display_name": "Age Group",
+        "type": "manageable",
+        "unique_field": "qcode",
+        "selection_type": "single selection",
+        "schema": {
+            "qcode": {},
+            "name": {}
+        },
+        "items": [
+            {"qcode":  "0-25", "name": "0-25", "is_active":  true},
+            {"qcode":  "26-35", "name": "26-35", "is_active":  true},
+            {"qcode":  "36-45", "name": "36-45", "is_active":  true},
+            {"qcode":  "46-55", "name": "46-55", "is_active":  true},
+            {"qcode":  "56-65", "name": "56-65", "is_active":  true},
+            {"qcode":  "66+", "name": "66+", "is_active":  true}
+        ]
+    },
+    {
+        "_id": "gender",
+        "display_name": "Gender",
+        "type": "manageable",
+        "unique_field": "qcode",
+        "selection_type": "single selection",
+        "schema": {
+            "qcode": {},
+            "name": {}
+        },
+        "items": [
+            {"qcode": "woman", "name": "Woman", "is_active": true},
+            {"qcode": "man", "name": "Man", "is_active": true},
+            {"qcode": "transgender", "name": "Transgender", "is_active": true},
+            {"qcode": "non_binary", "name": "Non Binary/Non-Confirming", "is_active": true},
+            {"qcode": "prefer_not_respond", "name": "Prefer Not To Respond", "is_active": true}
+        ]
+    },
+    {
+        "_id": "sdg",
+        "display_name": "SDGs",
+        "type": "manageable",
+        "unique_field": "qcode",
+        "selection_type": "single selection",
+        "schema": {
+            "qcode": {},
+            "name": {}
+        },
+        "items": [
+            {"qcode": "SDG1", "is_active": true, "name": "End poverty in all its forms everywhere"},
+            {"qcode": "SDG2", "is_active": true, "name": "End hunger, achieve food security and improved nutrition and promote sustainable agriculture"},
+            {"qcode": "SDG3", "is_active": true, "name": "Ensure healthy lives and promote well-being for all at all ages"},
+            {"qcode": "SDG4", "is_active": true, "name": "Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all"},
+            {"qcode": "SDG5", "is_active": true, "name": "Achieve gender equality and empower all women and girls"},
+            {"qcode": "SDG6", "is_active": true, "name": "Ensure availability and sustainable management of water and sanitation for all"},
+            {"qcode": "SDG7", "is_active": true, "name": "Ensure access to affordable, reliable, sustainable and modern energy for all"},
+            {"qcode": "SDG8", "is_active": true, "name": "Promote sustained, inclusive and sustainable economic growth, full and productive employment and decent work for all"},
+            {"qcode": "SDG9", "is_active": true, "name": "Build resilient infrastructure, promote inclusive and sustainable industrialization and foster innovation"},
+            {"qcode": "SDG10", "is_active": true, "name": "Reduce inequality within and among countries"},
+            {"qcode": "SDG11", "is_active": true, "name": "Make cities and human settlements inclusive, safe, resilient and sustainable"},
+            {"qcode": "SDG12", "is_active": true, "name": "Ensure sustainable consumption and production patterns"},
+            {"qcode": "SDG13", "is_active": true, "name": "Take urgent action to combat climate change and its impacts"},
+            {"qcode": "SDG14", "is_active": true, "name": "Conserve and sustainably use the oceans, seas and marine resources for sustainable development"},
+            {"qcode": "SDG15", "is_active": true, "name": "Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss"},
+            {"qcode": "SDG16", "is_active": true, "name": "Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels"}
+        ]
+    },
+    {
+        "_id": "university",
+        "display_name": "University",
+        "type": "manageable",
+        "unique_field": "qcode",
+        "selection_type": "single selection",
+        "schema": {
+            "qcode": {},
+            "name": {}
+        },
+        "items": []
+    },
+    {
+        "_id": "title",
+        "display_name": "Title",
+        "type": "manageable",
+        "unique_field": "qcode",
+        "selection_type": "single selection",
+        "schema": {
+            "qcode": {},
+            "name": {}
+        },
+        "items": [
+            {"qcode": "professor", "name": "Professor", "is_active": true},
+            {"qcode": "associate_professor", "name": "Associate Professor", "is_active": true},
+            {"qcode": "dr", "name": "Dr", "is_active": true},
+            {"qcode": "mr", "name": "Mr", "is_active": true},
+            {"qcode": "mrs", "name": "Mrs", "is_active": true},
+            {"qcode": "ms", "name": "Ms", "is_active": true},
+            {"qcode": "master", "name": "Master", "is_active": true},
+            {"qcode": "not_specified", "name": "Not Specified", "is_active": true}
+        ]
+    },
+    {
+        "_id": "project",
+        "display_name": "Project",
+        "type": "manageable",
+        "unique_field": "qcode",
+        "selection_type": "single selection",
+        "schema": {
+            "qcode": {},
+            "name": {}
+        },
+        "items": []
     }
 ]
