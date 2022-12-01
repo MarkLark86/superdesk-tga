@@ -9,9 +9,13 @@ import {Select, Option} from "superdesk-ui-framework/react";
 
 export class VocabularyField extends React.PureComponent<IVocabularyFieldProps> {
     render() {
+        if (this.props.config?.vocabulary_name == null) {
+            return null;
+        }
+
         const {WithLiveResources} = superdesk.components;
         const resources: ILiveResourcesProps['resources'] = [
-            {resource: 'vocabularies', ids: [this.props.config?.vocabulary_name]}
+            {resource: 'vocabularies', ids: [this.props.config.vocabulary_name]}
         ];
 
         return (
