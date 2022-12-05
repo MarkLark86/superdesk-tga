@@ -31,6 +31,7 @@ export class VocabularyField extends React.PureComponent<IVocabularyFieldProps> 
                             }}
                             value={this.props.value?.qcode}
                             inlineLabel={true}
+                            disabled={this.props.readOnly}
                         >
                             <Option />
                             {items.map((item) => (
