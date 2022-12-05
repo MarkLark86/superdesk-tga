@@ -2,7 +2,6 @@ import {IExtension, IExtensionActivationResult} from 'superdesk-api';
 import {superdesk} from './superdesk';
 
 import {ProfileIDField} from './components/profileId/editor';
-import {ProfileIDPreview} from './components/profileId/preview';
 
 import {ProfileTextField} from './components/profileText/editor';
 import {ProfileTextPreview} from './components/profileText/preview';
@@ -23,7 +22,6 @@ const extension: IExtension = {
                         id: 'profile-id',
                         label: gettext('Profile ID'),
                         editorComponent: ProfileIDField,
-                        previewComponent: ProfileIDPreview,
                     },
                     {
                         id: 'profile-text',
