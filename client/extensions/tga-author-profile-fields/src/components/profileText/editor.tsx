@@ -25,7 +25,7 @@ export class ProfileTextField extends React.PureComponent<IProps> {
     onProfileIDChanged(event: Event) {
         const user = (event as CustomEvent<IUser>).detail;
 
-        switch (this.props.field_id) {
+        switch (this.props.fieldId) {
         case 'profile_first_name':
             this.props.setValue(user.first_name || '');
             break;
