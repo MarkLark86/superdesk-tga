@@ -1,4 +1,4 @@
-from copy import copy, deepcopy
+from copy import copy
 from flask import json
 
 from superdesk import get_resource_service
@@ -10,8 +10,6 @@ from content_api.publish import MONGO_PREFIX
 from settings import CONTENTAPI_INSTALLED_APPS
 from .author_profiles_test import VOCABULARIES, CONTENT_TYPES
 from tga.author_profiles import AUTHOR_PROFILE_ROLE
-
-from pprint import pprint
 
 TEST_USER = {
     "_id": "abcd123",
@@ -75,6 +73,7 @@ class ContentAPITestCase(TestCase):
                     "name": "Director",
                     "is_active": True,
                 },
+                "profile_private_text": "This should not be included in the ContentAPI",
             },
         }
         self.content_api.publish(item, [TEST_SUBSCRIBER])
@@ -107,6 +106,7 @@ class ContentAPITestCase(TestCase):
             self.assertEqual(data["job_title"], "Director")
             self.assertEqual(data["profile_id"], TEST_USER["_id"])
             self.assertEqual(data["uri"], "http://localhost:5400/author_profiles/abcd123")
+            self.assertNotIn("private_text", data)
 
         with self.capi.test_client() as c:
             response = c.get("author_profiles", headers=headers)
@@ -123,10 +123,21 @@ class ContentAPITestCase(TestCase):
             assertUser(data)
 
             # User Profiles not available through the Content Items endpoint
+            self.assertEqual(200, c.get("items/content_bar", headers=headers).status_code)
+            self.assertEqual(404, c.get("items/abcd123", headers=headers).status_code)
+
             response = c.get("items", headers=headers)
             self.assertEqual(200, response.status_code)
             data = json.loads(response.data)
             self.assertEqual(1, data["_meta"]["total"])
             self.assertEqual("content_bar", data["_items"][0]["original_id"])
-            self.assertEqual(200, c.get("items/content_bar", headers=headers).status_code)
-            self.assertEqual(404, c.get("items/abcd123", headers=headers).status_code)
+
+            # Make sure the Authors metadata was enhanced using User Profiles
+            author = data["_items"][0]["authors"][0]
+            self.assertEqual("abcd123", author["code"])
+            self.assertEqual("Fooey", author["first_name"])
+            self.assertEqual("Barey", author["last_name"])
+            self.assertEqual("Director", author["job_title"])
+            self.assertEqual("writer", author["role"])
+            self.assertEqual("urn:360info:superdesk:user:abcd123", author["uri"])
+            self.assertNotIn("private_text", author)

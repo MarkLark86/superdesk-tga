@@ -87,11 +87,12 @@ class AuthoringProfileService(ItemsService):
         return profile
 
     def get_author_profiles_by_user_ids(self, user_ids) -> List[Dict[str, Any]]:
+        urn_domain = app.config["URN_DOMAIN"]
         return self.search({
             "query": {
                 "bool": {
                     "must": [
-                        {"terms": {"authors.uri": [f"domain:user:{user_id}" for user_id in user_ids]}},
+                        {"terms": {"authors.uri": [f"urn:{urn_domain}:user:{user_id}" for user_id in user_ids]}},
                         {"term": {"authors.role": AUTHOR_PROFILE_ROLE}},
                     ],
                 },

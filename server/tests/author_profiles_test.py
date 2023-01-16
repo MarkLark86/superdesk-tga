@@ -65,6 +65,19 @@ VOCABULARIES = [
         "custom_field_type": "profile-text",
         "display_name": "Last Name",
     },
+    {
+        "_id": "profile_private_text",
+        "field_type": "custom",
+        "items": [],
+        "type": "manageable",
+        "schema": {},
+        "service": {"all": 1},
+        "custom_field_type": "profile-text",
+        "custom_field_config": {
+            "exclude_from_content_api": True,
+        },
+        "display_name": "Last Name",
+    },
 ]
 
 CONTENT_TYPES = [
@@ -104,14 +117,14 @@ CONTENT_TYPES = [
             "profile_job_title": {
                 "enabled": True,
                 "field_name": "Job Title",
-                "order": 3,
+                "order": 2,
                 "section": "content",
                 "required": False,
             },
             "profile_first_name": {
                 "enabled": True,
                 "field_name": "First Name",
-                "order": 4,
+                "order": 3,
                 "section": "content",
                 "required": True,
             },
@@ -121,6 +134,13 @@ CONTENT_TYPES = [
                 "order": 4,
                 "section": "content",
                 "required": True,
+            },
+            "profile_private_text": {
+                "enabled": True,
+                "field_name": "Private Text",
+                "order": 5,
+                "section": "content",
+                "required": False,
             },
         },
         "schema": {
@@ -143,6 +163,12 @@ CONTENT_TYPES = [
                 "nullable": True,
             },
             "profile_last_name": {
+                "type": "custom",
+                "required": False,
+                "enabled": True,
+                "nullable": True,
+            },
+            "profile_private_text": {
                 "type": "custom",
                 "required": False,
                 "enabled": True,
