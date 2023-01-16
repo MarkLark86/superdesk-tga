@@ -1,0 +1,132 @@
+from copy import copy, deepcopy
+from flask import json
+
+from superdesk import get_resource_service
+from superdesk.tests import TestCase
+
+from content_api.app import get_app
+from content_api.publish import MONGO_PREFIX
+
+from settings import CONTENTAPI_INSTALLED_APPS
+from .author_profiles_test import VOCABULARIES, CONTENT_TYPES
+from tga.author_profiles import AUTHOR_PROFILE_ROLE
+
+from pprint import pprint
+
+TEST_USER = {
+    "_id": "abcd123",
+    "username": "foobar",
+    "first_name": "Foo",
+    "last_name": "Bar",
+    "user_type": "user",
+    "display_name": "Foo Bar",
+    "is_enabled": True,
+    "is_active": True,
+}
+
+TEST_SUBSCRIBER = {"_id": "sub1"}
+
+
+class ContentAPITestCase(TestCase):
+    def setUp(self):
+        self.content_api = get_resource_service("content_api")
+        self.db = self.app.data.mongo.pymongo(prefix=MONGO_PREFIX).db
+        self.app.config["SECRET_KEY"] = "secret"
+        config = copy(self.app.config)
+        config["AMAZON_CONTAINER_NAME"] = None  # force gridfs
+        config["URL_PREFIX"] = ""
+        config["MEDIA_PREFIX"] = "/assets"
+        config["CONTENTAPI_INSTALLED_APPS"] = CONTENTAPI_INSTALLED_APPS
+        self.capi = get_app(config)
+        self.capi.testing = True
+        self.subscriber = {"_id": "sub1"}
+
+        self.app.data.insert("vocabularies", VOCABULARIES)
+        self.app.data.insert("content_types", CONTENT_TYPES)
+        self.app.data.insert("users", [TEST_USER])
+
+    def _auth_headers(self, sub=None):
+        if sub is None:
+            sub = self.subscriber
+        service = get_resource_service("subscriber_token")
+        payload = {"subscriber": sub.get("_id")}
+        service.create([payload])
+        token = payload["_id"]
+        headers = {"Authorization": "Token " + token}
+        return headers
+
+    def _publish_user_profile(self):
+        item = {
+            "guid": "foo",
+            "type": "text",
+            "authors": [{
+                "code": [TEST_USER["_id"], "Author Profile"],
+                "role": AUTHOR_PROFILE_ROLE,
+                "name": TEST_USER["display_name"],
+                "parent": TEST_USER["_id"],
+                "sub_label": TEST_USER["display_name"],
+            }],
+            "extra": {
+                "profile_id": TEST_USER["_id"],
+                "profile_first_name": "Fooey",
+                "profile_last_name": "Barey",
+                "profile_job_title": {
+                    "qcode": "DIRECTOR",
+                    "name": "Director",
+                    "is_active": True,
+                },
+            },
+        }
+        self.content_api.publish(item, [TEST_SUBSCRIBER])
+
+    def _publish_content_item(self):
+        item = {
+            "guid": "content_bar",
+            "type": "text",
+            "authors": [{
+                "code": [TEST_USER["_id"], "Writer"],
+                "role": "writer",
+                "name": TEST_USER["display_name"],
+                "parent": TEST_USER["_id"],
+                "sub_label": TEST_USER["display_name"],
+            }],
+            "slugline": "test-content",
+            "headling": "Test Content",
+            "body_html": "<p>Test Content</p>",
+        }
+        self.content_api.publish(item, [TEST_SUBSCRIBER])
+
+    def test_author_profiles_endpoint(self):
+        headers = self._auth_headers(TEST_SUBSCRIBER)
+        self._publish_user_profile()
+        self._publish_content_item()
+
+        def assertUser(data):
+            self.assertEqual(data["first_name"], "Fooey")
+            self.assertEqual(data["last_name"], "Barey")
+            self.assertEqual(data["job_title"], "Director")
+            self.assertEqual(data["profile_id"], TEST_USER["_id"])
+            self.assertEqual(data["uri"], "http://localhost:5400/author_profiles/abcd123")
+
+        with self.capi.test_client() as c:
+            response = c.get("author_profiles", headers=headers)
+            self.assertEqual(200, response.status_code)
+            data = json.loads(response.data)
+            self.assertEqual(1, data["_meta"]["total"])
+            self.assertEqual("foo", data["_items"][0]["original_id"])
+            assertUser(data["_items"][0])
+
+            response = c.get("author_profiles/abcd123", headers=headers)
+            self.assertEqual(200, response.status_code)
+            data = json.loads(response.data)
+            self.assertEqual("foo", data["original_id"])
+            assertUser(data)
+
+            # User Profiles not available through the Content Items endpoint
+            response = c.get("items", headers=headers)
+            self.assertEqual(200, response.status_code)
+            data = json.loads(response.data)
+            self.assertEqual(1, data["_meta"]["total"])
+            self.assertEqual("content_bar", data["_items"][0]["original_id"])
+            self.assertEqual(200, c.get("items/content_bar", headers=headers).status_code)
+            self.assertEqual(404, c.get("items/abcd123", headers=headers).status_code)
