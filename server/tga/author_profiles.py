@@ -2,6 +2,9 @@ from typing import List, Dict, Any
 from superdesk import get_resource_service
 
 
+AUTHOR_PROFILE_ROLE = "author_profile"
+
+
 def update_author_profile_content(_sender: Any, updates: Dict[str, Any], original: Dict[str, Any]):
     """Process the ``AuthorProfile`` content on update"""
 
@@ -48,6 +51,16 @@ def _set_article_fields(updates: Dict[str, Any]):
 
     if not updates.get("headline"):
         updates["headline"] = "Author Profile"
+
+    if extra.get("profile_id"):
+        user_id = updates["extra"]["profile_id"]
+        updates["authors"] = [{
+            "_id": [user_id, "Author Profile"],
+            "role": AUTHOR_PROFILE_ROLE,
+            "name": "Author Profile",
+            "parent": user_id,
+            "sub_label": updates["slugline"]
+        }]
 
 
 def _add_cv_item_on_update(updates: Dict[str, Any], original: Dict[str, Any], custom_fields: List[Dict[str, Any]]):
