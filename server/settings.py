@@ -11,6 +11,7 @@
 
 from pathlib import Path
 from superdesk.default_settings import strtobool, env
+from content_api.app.settings import CONTENTAPI_INSTALLED_APPS
 
 ABS_PATH = str(Path(__file__).resolve().parent)
 
@@ -162,3 +163,12 @@ PLANNING_CHECK_FOR_ASSIGNMENT_ON_PUBLISH = True
 SLACK_BOT_TOKEN = env('SLACK_BOT_TOKEN', '')
 
 APM_SERVICE_NAME = "360info"
+
+CONTENTAPI_INSTALLED_APPS = [
+    module
+    for module in CONTENTAPI_INSTALLED_APPS
+    if module != "content_api.items"
+] + [
+    "tga.content_api.items",
+    "tga.content_api.author_profiles",
+]
