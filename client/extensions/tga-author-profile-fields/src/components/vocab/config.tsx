@@ -43,6 +43,7 @@ export class VocabularyFieldConfig extends React.Component<IProps, IState> {
                 this.props.onChange({
                     vocabulary_name: cvs[0]._id,
                     allow_freetext: this.props.config?.allow_freetext ?? false,
+                    exclude_from_content_api: this.props.config?.exclude_from_content_api ?? false,
                 });
             }
         });
@@ -52,6 +53,7 @@ export class VocabularyFieldConfig extends React.Component<IProps, IState> {
         const config = this.props.config ?? {
             vocabulary_name: '',
             allow_freetext: false,
+            exclude_from_content_api: false,
         };
         const {Spacer} = superdesk.components;
         const {gettext} = superdesk.localization;
@@ -80,6 +82,16 @@ export class VocabularyFieldConfig extends React.Component<IProps, IState> {
                             ...config,
                             allow_freetext: allow_freetext,
                         });
+                    }}
+                />
+                <Switch
+                    label={{text: gettext('Exclude from ContentAPI')}}
+                    value={config?.exclude_from_content_api == true}
+                    onChange={(exclude_from_content_api) => {
+                        this.props.onChange({
+                            ...config,
+                            exclude_from_content_api: exclude_from_content_api,
+                        })
                     }}
                 />
             </Spacer>
