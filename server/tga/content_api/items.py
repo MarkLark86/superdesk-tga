@@ -18,6 +18,11 @@ class ItemsService(_ItemsService):
 
         req.args["filter"] = json.dumps(req_filter)
 
+    def _is_internal_api(self):
+        """Override this check, to remove filtering by subscribers used when the item was published"""
+
+        return False
+
 
 def init_app(app):
     endpoint_name = "items"
