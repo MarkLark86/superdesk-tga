@@ -21,6 +21,9 @@ def update_author_profile_content(_sender: Any, updates: Dict[str, Any], origina
 def _get_content_profile_custom_fields(original: Dict[str, Any]) -> List[Dict[str, Any]]:
     """Get the list of ``CustomFields`` from the ``ContentProfile`` for the content provided"""
 
+    if not original.get("profile"):
+        return []
+
     content_profile = get_resource_service("content_types").find_one(req=None, _id=original["profile"])
     return [
         field
