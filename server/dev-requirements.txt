@@ -6,3 +6,5 @@ pep8
 httmock
 wooper
 mypy
+pytest
+pytest-env
