@@ -1,4 +1,4 @@
-from copy import copy
+from copy import deepcopy
 from flask import json
 
 from superdesk import get_resource_service
@@ -8,7 +8,7 @@ from content_api.app import get_app
 from content_api.publish import MONGO_PREFIX
 
 from settings import CONTENTAPI_INSTALLED_APPS
-from .author_profiles_test import VOCABULARIES, CONTENT_TYPES
+from .author_profiles_test import VOCABULARIES, CONTENT_TYPES, SDGS
 from tga.author_profiles import AUTHOR_PROFILE_ROLE
 
 TEST_USER = {
@@ -30,7 +30,7 @@ class ContentAPITestCase(TestCase):
         self.content_api = get_resource_service("content_api")
         self.db = self.app.data.mongo.pymongo(prefix=MONGO_PREFIX).db
         self.app.config["SECRET_KEY"] = "secret"
-        config = copy(self.app.config)
+        config = deepcopy(self.app.config)
         config["AMAZON_CONTAINER_NAME"] = None  # force gridfs
         config["URL_PREFIX"] = ""
         config["MEDIA_PREFIX"] = "/assets"
@@ -53,7 +53,7 @@ class ContentAPITestCase(TestCase):
         headers = {"Authorization": "Token " + token}
         return headers
 
-    def _publish_user_profile(self):
+    def _publish_user_profile(self, multi_value_sdgs=False):
         item = {
             "guid": "foo",
             "type": "text",
@@ -76,6 +76,17 @@ class ContentAPITestCase(TestCase):
                 "profile_private_text": "This should not be included in the ContentAPI",
             },
         }
+        if multi_value_sdgs:
+            item["extra"].update({
+                "profile_sdgs": [SDGS[0], SDGS[1]],
+                "profile_sdg_a": None,
+                "profile_sdg_b": None,
+            })
+        else:
+            item["extra"].update({
+                "profile_sdg_a": SDGS[0],
+                "profile_sdg_b": SDGS[1],
+            })
         self.content_api.publish(item, [TEST_SUBSCRIBER])
 
     def _publish_content_item(self):
@@ -141,3 +152,51 @@ class ContentAPITestCase(TestCase):
             self.assertEqual("writer", author["role"])
             self.assertEqual("urn:360info:superdesk:user:abcd123", author["uri"])
             self.assertNotIn("private_text", author)
+            self.assertEqual(SDGS[0]["name"], author["sdg_a"])
+            self.assertEqual(SDGS[1]["name"], author["sdg_b"])
+
+            # Make sure if the CV defines the field as a ``multi selection``
+            # then the value returned is an array
+            self.app.data.update("vocabularies", "sdg", {"selection_type": "multi selection"}, {})
+
+            # Update the ContentProfile to remove the original SDGs and add 1
+            new_cv_field = deepcopy(VOCABULARIES[7])
+            new_cv_field["_id"] = "profile_sdgs"
+            self.app.data.insert("vocabularies", [new_cv_field])
+
+            profile_updates = deepcopy(CONTENT_TYPES[1])
+            profile_updates["editor"]["profile_sdgs"] = profile_updates["editor"].pop("profile_sdg_a")
+            profile_updates["editor"].pop("profile_sdg_b")
+
+            profile_updates["schema"]["profile_sdgs"] = profile_updates["schema"].pop("profile_sdg_a")
+            profile_updates["schema"].pop("profile_sdg_b")
+            self.app.data.update("content_types", "author_profile", profile_updates, {})
+
+            # Test Author Profiles
+            response = c.get("author_profiles", headers=headers)
+            self.assertEqual(200, response.status_code)
+            data = json.loads(response.data)["_items"][0]
+            assertUser(data)
+
+            # Update Author Profile to use multi selection SDGs
+            self._publish_user_profile(True)
+            response = c.get("author_profiles", headers=headers)
+            self.assertEqual(200, response.status_code)
+            data = json.loads(response.data)["_items"][0]
+            assertUser(data)
+
+            # Test SDGs are combined
+            self.assertListEqual([SDGS[0]["name"], SDGS[1]["name"]], data["sdgs"])
+            self.assertNotIn("sdg_a", data)
+            self.assertNotIn("sdg_b", data)
+
+            # Test Content
+            response = c.get("items", headers=headers)
+            self.assertEqual(200, response.status_code)
+            data = json.loads(response.data)
+            author = data["_items"][0]["authors"][0]
+
+            # Test SDGs are combined
+            self.assertListEqual([SDGS[0]["name"], SDGS[1]["name"]], author["sdgs"])
+            self.assertNotIn("sdg_a", author)
+            self.assertNotIn("sdg_b", author)

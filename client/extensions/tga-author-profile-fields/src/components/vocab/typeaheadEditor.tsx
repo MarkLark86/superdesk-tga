@@ -1,12 +1,14 @@
 import * as React from 'react';
 
-import {ILiveResourcesProps, IRestApiResponse, IVocabulary, IVocabularyItem} from 'superdesk-api';
+import {ILiveResourcesProps, IRestApiResponse, IVocabulary, IVocabularyItem, IEditorComponentProps} from 'superdesk-api';
 import {superdesk} from '../../superdesk';
-import {IVocabularyFieldProps} from './interfaces';
 
-import {Autocomplete} from "superdesk-ui-framework/react";
+import {Autocomplete} from 'superdesk-ui-framework/react';
+import {IVocabularyFieldConfig} from "./interfaces";
 
 
+type IVocabularyFieldValue = IVocabularyItem | null | undefined;
+type IVocabularyFieldProps = IEditorComponentProps<IVocabularyFieldValue, IVocabularyFieldConfig>
 const NEW_ITEM_PREFIX = '_new:';
 
 export class VocabularyTypeaheadField extends React.PureComponent<IVocabularyFieldProps> {

@@ -5,6 +5,38 @@ from superdesk.tests import TestCase
 from tga.author_profiles import update_author_profile_content
 
 
+SDGS = [
+    {"qcode": "SDG1", "is_active": True, "name": "End poverty in all its forms everywhere"},
+    {"qcode": "SDG2", "is_active": True, "name": "End hunger, achieve food security and improved nutrition and promote "
+                                                 "sustainable agriculture"},
+    {"qcode": "SDG3", "is_active": True, "name": "Ensure healthy lives and promote well-being for all at all ages"},
+    {"qcode": "SDG4", "is_active": True, "name": "Ensure inclusive and equitable quality education and promote lifelong"
+                                                 " learning opportunities for all"},
+    {"qcode": "SDG5", "is_active": True, "name": "Achieve gender equality and empower all women and girls"},
+    {"qcode": "SDG6", "is_active": True, "name": "Ensure availability and sustainable management of water and"
+                                                 " sanitation for all"},
+    {"qcode": "SDG7", "is_active": True, "name": "Ensure access to affordable, reliable, sustainable and modern"
+                                                 " energy for all"},
+    {"qcode": "SDG8", "is_active": True, "name": "Promote sustained, inclusive and sustainable economic growth,"
+                                                 " full and productive employment and decent work for all"},
+    {"qcode": "SDG9", "is_active": True, "name": "Build resilient infrastructure, promote inclusive and sustainable"
+                                                 " industrialization and foster innovation"},
+    {"qcode": "SDG10", "is_active": True, "name": "Reduce inequality within and among countries"},
+    {"qcode": "SDG11", "is_active": True, "name": "Make cities and human settlements inclusive, safe, resilient"
+                                                  " and sustainable"},
+    {"qcode": "SDG12", "is_active": True, "name": "Ensure sustainable consumption and production patterns"},
+    {"qcode": "SDG13", "is_active": True, "name": "Take urgent action to combat climate change and its impacts"},
+    {"qcode": "SDG14", "is_active": True, "name": "Conserve and sustainably use the oceans, seas and marine"
+                                                  " resources for sustainable development"},
+    {"qcode": "SDG15", "is_active": True, "name": "Protect, restore and promote sustainable use of terrestrial"
+                                                  " ecosystems, sustainably manage forests, combat desertification,"
+                                                  " and halt and reverse land degradation and halt biodiversity loss"},
+    {"qcode": "SDG16", "is_active": True, "name": "Promote peaceful and inclusive societies for sustainable"
+                                                  " development, provide access to justice for all and build"
+                                                  " effective, accountable and inclusive institutions at all levels"}
+]
+
+
 VOCABULARIES = [
     {
         "_id": "profile_id",
@@ -78,6 +110,46 @@ VOCABULARIES = [
         },
         "display_name": "Last Name",
     },
+    {
+        "_id": "sdg",
+        "display_name": "SDGs",
+        "type": "manageable",
+        "unique_field": "qcode",
+        "selection_type": "single selection",
+        "schema": {
+            "qcode": {"required": True},
+            "name": {"required": True},
+        },
+        "items": SDGS,
+    },
+    {
+        "_id": "profile_sdg_a",
+        "display_name": "Sustainable Development Goals",
+        "field_type": "custom",
+        "service": {"all": 1},
+        "custom_field_type": "vocabulary-field",
+        "custom_field_config": {
+            "vocabulary_name": "sdg",
+            "allow_freetext": False,
+            "exclude_from_content_api": False,
+        },
+        "items": [],
+        "schema": {},
+    },
+    {
+        "_id": "profile_sdg_b",
+        "display_name": "Sustainable Development Goals",
+        "field_type": "custom",
+        "service": {"all": 1},
+        "custom_field_type": "vocabulary-field",
+        "custom_field_config": {
+            "vocabulary_name": "sdg",
+            "allow_freetext": False,
+            "exclude_from_content_api": False,
+        },
+        "items": [],
+        "schema": {},
+    }
 ]
 
 CONTENT_TYPES = [
@@ -142,6 +214,20 @@ CONTENT_TYPES = [
                 "section": "content",
                 "required": False,
             },
+            "profile_sdg_a": {
+                "enabled": True,
+                "field_name": "SDGs",
+                "order": 6,
+                "section": "content",
+                "required": False,
+            },
+            "profile_sdg_b": {
+                "enabled": True,
+                "field_name": "SDGs",
+                "order": 7,
+                "section": "content",
+                "required": False,
+            },
         },
         "schema": {
             "profile_id": {
@@ -169,6 +255,18 @@ CONTENT_TYPES = [
                 "nullable": True,
             },
             "profile_private_text": {
+                "type": "custom",
+                "required": False,
+                "enabled": True,
+                "nullable": True,
+            },
+            "profile_sdg_a": {
+                "type": "custom",
+                "required": False,
+                "enabled": True,
+                "nullable": True,
+            },
+            "profile_sdg_b": {
                 "type": "custom",
                 "required": False,
                 "enabled": True,
