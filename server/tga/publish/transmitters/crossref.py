@@ -22,13 +22,9 @@ class CrossrefPushService(HTTPPushService):
 
         response = requests.post(
             url,
-            data={
-                "operation": "doMDUpload",
-                "login_id": username,
-                "login_passwd": password
-            },
+            data={"operation": "doMDUpload", "login_id": username, "login_passwd": password},
             files={"fname": item},
-            timeout=app.config.get("HTTP_PUSH_TIMEOUT", (5, 30))
+            timeout=app.config.get("HTTP_PUSH_TIMEOUT", (5, 30)),
         )
         try:
             response.raise_for_status()

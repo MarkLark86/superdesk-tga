@@ -14,19 +14,26 @@ doi_batch_id = ObjectId()
 class CrossrefFormatterTest(TestCase):
     def setUp(self):
         self.formatter = CrossrefFormatter()
-        self.app.data.insert("users", [{
-            "_id": USER_1_ID,
-            "first_name": "Joe",
-            "last_name": "Blogs",
-        }, {
-            "_id": USER_2_ID,
-            "first_name": "Ferry",
-            "last_name": "Blast",
-        }, {
-            "_id": USER_3_ID,
-            "first_name": "Perry",
-            "last_name": "Doc",
-        }])
+        self.app.data.insert(
+            "users",
+            [
+                {
+                    "_id": USER_1_ID,
+                    "first_name": "Joe",
+                    "last_name": "Blogs",
+                },
+                {
+                    "_id": USER_2_ID,
+                    "first_name": "Ferry",
+                    "last_name": "Blast",
+                },
+                {
+                    "_id": USER_3_ID,
+                    "first_name": "Perry",
+                    "last_name": "Doc",
+                },
+            ],
+        )
 
     @patch("tga.publish.formatters.crossref.utcnow", return_value=datetime(2022, 5, 31, 13, 0, 0))
     @patch("tga.publish.formatters.crossref.ObjectId", return_value=doi_batch_id)
@@ -40,34 +47,38 @@ class CrossrefFormatterTest(TestCase):
             },
             "headline": "This is a test headline",
             "versioncreated": datetime(2022, 5, 31, 11, 45, 19, 0),
-            "authors": [{
-                "name": "Author",
-                "parent": USER_1_ID,
-                "role": "author",
-                "sub_label": "Joe Blogs",
-                "_id": [
-                    USER_1_ID,
-                    "author",
-                ],
-            }, {
-                "name": "Editor",
-                "parent": USER_2_ID,
-                "role": "editor",
-                "sub_label": "Ferry Blast",
-                "_id": [
-                    USER_2_ID,
-                    "editor",
-                ]
-            }, {
-                "name": "Editor",
-                "parent": USER_3_ID,
-                "role": "editor",
-                "sub_label": "Perry Doc",
-                "_id": [
-                    USER_3_ID,
-                    "editor",
-                ]
-            }]
+            "authors": [
+                {
+                    "name": "Author",
+                    "parent": USER_1_ID,
+                    "role": "author",
+                    "sub_label": "Joe Blogs",
+                    "_id": [
+                        USER_1_ID,
+                        "author",
+                    ],
+                },
+                {
+                    "name": "Editor",
+                    "parent": USER_2_ID,
+                    "role": "editor",
+                    "sub_label": "Ferry Blast",
+                    "_id": [
+                        USER_2_ID,
+                        "editor",
+                    ],
+                },
+                {
+                    "name": "Editor",
+                    "parent": USER_3_ID,
+                    "role": "editor",
+                    "sub_label": "Perry Doc",
+                    "_id": [
+                        USER_3_ID,
+                        "editor",
+                    ],
+                },
+            ],
         }
 
         xml = self.formatter._gen_xml(article)
@@ -88,8 +99,8 @@ class CrossrefFormatterTest(TestCase):
         self.assertEqual(metadata.find("publication_date/month").text, "05")
         self.assertEqual(metadata.find("publication_date/day").text, "31")
 
-        self.assertEqual(metadata.find('doi_data/doi').text, "10.54377/f5f3-c543")
-        self.assertEqual(metadata.find('doi_data/resource').text, "https://360info.org/?doi=10.54377/f5f3-c543")
+        self.assertEqual(metadata.find("doi_data/doi").text, "10.54377/f5f3-c543")
+        self.assertEqual(metadata.find("doi_data/resource").text, "https://360info.org/?doi=10.54377/f5f3-c543")
 
         contributors = {
             n.find("given_name").text + "_" + n.find("surname").text: n

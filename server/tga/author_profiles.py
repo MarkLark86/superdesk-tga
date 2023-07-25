@@ -54,13 +54,15 @@ def _set_article_fields(updates: Dict[str, Any]):
 
     if extra.get("profile_id"):
         user_id = updates["extra"]["profile_id"]
-        updates["authors"] = [{
-            "_id": [user_id, "Author Profile"],
-            "role": AUTHOR_PROFILE_ROLE,
-            "name": "Author Profile",
-            "parent": user_id,
-            "sub_label": updates["slugline"]
-        }]
+        updates["authors"] = [
+            {
+                "_id": [user_id, "Author Profile"],
+                "role": AUTHOR_PROFILE_ROLE,
+                "name": "Author Profile",
+                "parent": user_id,
+                "sub_label": updates["slugline"],
+            }
+        ]
 
 
 def _add_cv_item_on_update(updates: Dict[str, Any], original: Dict[str, Any], custom_fields: List[Dict[str, Any]]):

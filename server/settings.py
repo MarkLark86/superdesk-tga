@@ -30,10 +30,8 @@ if env("REDIS_PORT"):
 BROKER_URL = env("CELERY_BROKER_URL", REDIS_URL)
 
 DEFAULT_TIMEZONE = "Australia/Melbourne"
-DEFAULT_LANGUAGE = 'en'
-LANGUAGES = [
-    {'language': 'en', 'label': 'English', 'source': True, 'destination': True}
-]
+DEFAULT_LANGUAGE = "en"
+LANGUAGES = [{"language": "en", "label": "English", "source": True, "destination": True}]
 
 INSTALLED_APPS = [
     "apps.languages",
@@ -43,7 +41,7 @@ INSTALLED_APPS = [
     "tga.publish",
 ]
 
-MACROS_MODULE = env('MACROS_MODULE', 'macros')
+MACROS_MODULE = env("MACROS_MODULE", "macros")
 GENERATE_SHORT_GUID = True
 
 ARCHIVE_AUTOCOMPLETE = True
@@ -53,57 +51,86 @@ KEYWORDS_ADD_MISSING_ON_PUBLISH = True
 # publishing of associated and related items
 PUBLISH_ASSOCIATED_ITEMS = True
 
-FTP_TIMEOUT = int(env('FTP_TIMEOUT', 10))
+FTP_TIMEOUT = int(env("FTP_TIMEOUT", 10))
 
 # special characters that are disallowed
-DISALLOWED_CHARACTERS = ['!', '$', '%', '&', '"', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=',
-                         '>', '?', '@', '[', ']', '\\', '^', '_', '`', '{', '|', '}', '~']
+DISALLOWED_CHARACTERS = [
+    "!",
+    "$",
+    "%",
+    "&",
+    '"',
+    "(",
+    ")",
+    "*",
+    "+",
+    ",",
+    ".",
+    "/",
+    ":",
+    ";",
+    "<",
+    "=",
+    ">",
+    "?",
+    "@",
+    "[",
+    "]",
+    "\\",
+    "^",
+    "_",
+    "`",
+    "{",
+    "|",
+    "}",
+    "~",
+]
 
 # This value gets injected into NewsML 1.2 and G2 output documents.
-NEWSML_PROVIDER_ID = 'sourcefabric.org'
-ORGANIZATION_NAME = env('ORGANIZATION_NAME', 'Sourcefabric')
-ORGANIZATION_NAME_ABBREVIATION = env('ORGANIZATION_NAME_ABBREVIATION', 'SoFab')
+NEWSML_PROVIDER_ID = "sourcefabric.org"
+ORGANIZATION_NAME = env("ORGANIZATION_NAME", "Sourcefabric")
+ORGANIZATION_NAME_ABBREVIATION = env("ORGANIZATION_NAME_ABBREVIATION", "SoFab")
 
 SCHEMA = {
-    'picture': {
-        'slugline': {'required': False},
-        'headline': {'required': False},
-        'description_text': {'required': True},
-        'byline': {'required': False},
-        'copyrightnotice': {'required': False},
-        'usageterms': {'required': False},
-        'ednote': {'required': False},
+    "picture": {
+        "slugline": {"required": False},
+        "headline": {"required": False},
+        "description_text": {"required": True},
+        "byline": {"required": False},
+        "copyrightnotice": {"required": False},
+        "usageterms": {"required": False},
+        "ednote": {"required": False},
     },
-    'video': {
-        'slugline': {'required': False},
-        'headline': {'required': False},
-        'description_text': {'required': True},
-        'byline': {'required': True},
-        'copyrightnotice': {'required': False},
-        'usageterms': {'required': False},
-        'ednote': {'required': False},
+    "video": {
+        "slugline": {"required": False},
+        "headline": {"required": False},
+        "description_text": {"required": True},
+        "byline": {"required": True},
+        "copyrightnotice": {"required": False},
+        "usageterms": {"required": False},
+        "ednote": {"required": False},
     },
 }
 
 # editor for images, video, audio
 EDITOR = {
-    'picture': {
-        'headline': {'order': 1, 'sdWidth': 'full'},
-        'description_text': {'order': 2, 'sdWidth': 'full', 'textarea': True},
-        'byline': {'order': 3, 'displayOnMediaEditor': True},
-        'copyrightnotice': {'order': 4, 'displayOnMediaEditor': True},
-        'slugline': {'displayOnMediaEditor': True},
-        'ednote': {'displayOnMediaEditor': True},
-        'usageterms': {'order': 5, 'displayOnMediaEditor': True},
+    "picture": {
+        "headline": {"order": 1, "sdWidth": "full"},
+        "description_text": {"order": 2, "sdWidth": "full", "textarea": True},
+        "byline": {"order": 3, "displayOnMediaEditor": True},
+        "copyrightnotice": {"order": 4, "displayOnMediaEditor": True},
+        "slugline": {"displayOnMediaEditor": True},
+        "ednote": {"displayOnMediaEditor": True},
+        "usageterms": {"order": 5, "displayOnMediaEditor": True},
     },
-    'video': {
-        'headline': {'order': 1, 'sdWidth': 'full'},
-        'description_text': {'order': 2, 'sdWidth': 'full', 'textarea': True},
-        'byline': {'order': 3, 'displayOnMediaEditor': True},
-        'copyrightnotice': {'order': 4, 'displayOnMediaEditor': True},
-        'slugline': {'displayOnMediaEditor': True},
-        'ednote': {'displayOnMediaEditor': True},
-        'usageterms': {'order': 5, 'displayOnMediaEditor': True},
+    "video": {
+        "headline": {"order": 1, "sdWidth": "full"},
+        "description_text": {"order": 2, "sdWidth": "full", "textarea": True},
+        "byline": {"order": 3, "displayOnMediaEditor": True},
+        "copyrightnotice": {"order": 4, "displayOnMediaEditor": True},
+        "slugline": {"displayOnMediaEditor": True},
+        "ednote": {"displayOnMediaEditor": True},
+        "usageterms": {"order": 5, "displayOnMediaEditor": True},
     },
 }
 
@@ -119,8 +146,8 @@ RENDITIONS = {
     },
 }
 
-SCHEMA['audio'] = SCHEMA['video']
-EDITOR['audio'] = EDITOR['video']
+SCHEMA["audio"] = SCHEMA["video"]
+EDITOR["audio"] = EDITOR["video"]
 
 
 # media required fields for upload
@@ -146,8 +173,8 @@ NINJS_PLACE_EXTENDED = True
 
 # Analytics config
 ANALYTICS_ENABLE_SCHEDULED_REPORTS = strtobool(env("ANALYTICS_ENABLE_SCHEDULED_REPORTS", "true"))
-HIGHCHARTS_SERVER_HOST = env('HIGHCHARTS_SERVER_HOST', 'localhost')
-HIGHCHARTS_SERVER_PORT = env('HIGHCHARTS_SERVER_PORT', '6060')
+HIGHCHARTS_SERVER_HOST = env("HIGHCHARTS_SERVER_HOST", "localhost")
+HIGHCHARTS_SERVER_PORT = env("HIGHCHARTS_SERVER_PORT", "6060")
 
 # Planning config
 # enable event templates
@@ -160,16 +187,12 @@ PLANNING_AUTO_ASSIGN_TO_WORKFLOW = True
 PLANNING_CHECK_FOR_ASSIGNMENT_ON_PUBLISH = True
 
 # The Bot User OAuth Token for access to Slack
-SLACK_BOT_TOKEN = env('SLACK_BOT_TOKEN', '')
+SLACK_BOT_TOKEN = env("SLACK_BOT_TOKEN", "")
 
 APM_SERVICE_NAME = "360info"
 URN_DOMAIN = "360info:superdesk"
 
-CONTENTAPI_INSTALLED_APPS = [
-    module
-    for module in CONTENTAPI_INSTALLED_APPS
-    if module != "content_api.items"
-] + [
+CONTENTAPI_INSTALLED_APPS = [module for module in CONTENTAPI_INSTALLED_APPS if module != "content_api.items"] + [
     "tga.content_api.items",
     "tga.content_api.author_profiles",
 ]

@@ -57,13 +57,15 @@ class ContentAPITestCase(TestCase):
         item = {
             "guid": "foo",
             "type": "text",
-            "authors": [{
-                "code": [TEST_USER["_id"], "Author Profile"],
-                "role": AUTHOR_PROFILE_ROLE,
-                "name": TEST_USER["display_name"],
-                "parent": TEST_USER["_id"],
-                "sub_label": TEST_USER["display_name"],
-            }],
+            "authors": [
+                {
+                    "code": [TEST_USER["_id"], "Author Profile"],
+                    "role": AUTHOR_PROFILE_ROLE,
+                    "name": TEST_USER["display_name"],
+                    "parent": TEST_USER["_id"],
+                    "sub_label": TEST_USER["display_name"],
+                }
+            ],
             "extra": {
                 "profile_id": TEST_USER["_id"],
                 "profile_first_name": "Fooey",
@@ -77,29 +79,35 @@ class ContentAPITestCase(TestCase):
             },
         }
         if multi_value_sdgs:
-            item["extra"].update({
-                "profile_sdgs": [SDGS[0], SDGS[1]],
-                "profile_sdg_a": None,
-                "profile_sdg_b": None,
-            })
+            item["extra"].update(
+                {
+                    "profile_sdgs": [SDGS[0], SDGS[1]],
+                    "profile_sdg_a": None,
+                    "profile_sdg_b": None,
+                }
+            )
         else:
-            item["extra"].update({
-                "profile_sdg_a": SDGS[0],
-                "profile_sdg_b": SDGS[1],
-            })
+            item["extra"].update(
+                {
+                    "profile_sdg_a": SDGS[0],
+                    "profile_sdg_b": SDGS[1],
+                }
+            )
         self.content_api.publish(item, [TEST_SUBSCRIBER])
 
     def _publish_content_item(self):
         item = {
             "guid": "content_bar",
             "type": "text",
-            "authors": [{
-                "code": [TEST_USER["_id"], "Writer"],
-                "role": "writer",
-                "name": TEST_USER["display_name"],
-                "parent": TEST_USER["_id"],
-                "sub_label": TEST_USER["display_name"],
-            }],
+            "authors": [
+                {
+                    "code": [TEST_USER["_id"], "Writer"],
+                    "role": "writer",
+                    "name": TEST_USER["display_name"],
+                    "parent": TEST_USER["_id"],
+                    "sub_label": TEST_USER["display_name"],
+                }
+            ],
             "slugline": "test-content",
             "headling": "Test Content",
             "body_html": "<p>Test Content</p>",

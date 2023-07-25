@@ -11,11 +11,7 @@ from superdesk.errors import FormatterError
 
 logger = logging.getLogger(__name__)
 
-DEPOSITOR_INFO = dict(
-    name="360info",
-    email="charis.palmer@360info.org",
-    registrant="Monash University"
-)
+DEPOSITOR_INFO = dict(name="360info", email="charis.palmer@360info.org", registrant="Monash University")
 PUBLIC_DOI_URL_PREFIX = "https://360info.org/?doi="
 author_to_contributor_role_map = dict(
     adviser="author",
@@ -24,9 +20,7 @@ author_to_contributor_role_map = dict(
     editor="editor",
 )
 
-FormatterError._codes.update({
-    25000: "Failed to generate article metadata for Crossref"
-})
+FormatterError._codes.update({25000: "Failed to generate article metadata for Crossref"})
 
 
 class CrossrefFormatter(Formatter):
@@ -66,12 +60,8 @@ class CrossrefFormatter(Formatter):
                     pub_seq_num,
                     self.XML_ROOT
                     + etree.tostring(
-                        cr_xml,
-                        pretty_print=True,
-                        encoding="unicode",
-                        inclusive_ns_prefixes=["jats"],
-                        exclusive=True
-                    )
+                        cr_xml, pretty_print=True, encoding="unicode", inclusive_ns_prefixes=["jats"], exclusive=True
+                    ),
                 )
             ]
         except Exception as ex:
@@ -79,9 +69,7 @@ class CrossrefFormatter(Formatter):
 
     def _gen_xml(self, article):
         cr_xml = etree.Element(
-            "doi_batch",
-            attrib=CrossrefFormatter.debug_message_extra,
-            nsmap=CrossrefFormatter.message_nsmap
+            "doi_batch", attrib=CrossrefFormatter.debug_message_extra, nsmap=CrossrefFormatter.message_nsmap
         )
         self._format_header(cr_xml, article)
 
@@ -89,9 +77,7 @@ class CrossrefFormatter(Formatter):
 
         report_paper = etree.SubElement(body_xml, "report-paper")
         report_paper_metadata = etree.SubElement(
-            report_paper,
-            "report-paper_metadata",
-            attrib={"language": article.get("language", "en")}
+            report_paper, "report-paper_metadata", attrib={"language": article.get("language", "en")}
         )
 
         self._format_contributors(report_paper_metadata, article)
@@ -155,9 +141,9 @@ class CrossrefFormatter(Formatter):
             attributes = {
                 "sequence": "first" if is_first else "additional",
                 "contributor_role": (
-                    author_to_contributor_role_map.get(author.get("role", "author")) or
-                    author_to_contributor_role_map["author"]
-                )
+                    author_to_contributor_role_map.get(author.get("role", "author"))
+                    or author_to_contributor_role_map["author"]
+                ),
             }
             is_first = False
             person = etree.SubElement(contributors, "person_name", attrib=attributes)
