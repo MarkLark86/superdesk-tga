@@ -53,8 +53,6 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 14.x
-        cache: 'npm'
-        cache-dependency-path: client/package-lock.json
 
     - run: git config --global url."https://git@".insteadOf git://
 
