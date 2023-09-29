@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "analytics",
     "tga.signal_hooks",
     "tga.publish",
+    "tga.sign_off",
 ]
 
 MACROS_MODULE = env("MACROS_MODULE", "macros")
@@ -196,3 +197,6 @@ CONTENTAPI_INSTALLED_APPS = [module for module in CONTENTAPI_INSTALLED_APPS if m
     "tga.content_api.items",
     "tga.content_api.author_profiles",
 ]
+
+SIGN_OFF_REQUESTS_SHARED_SECRET = env("SIGN_OFF_REQUESTS_SHARED_SECRET", env("AUTH_SERVER_SHARED_SECRET"))
+SIGN_OFF_REQUESTS_EXPIRATION = 86400  # 1 day in seconds

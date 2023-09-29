@@ -1,0 +1,12 @@
+{% extends "email_layout.html" %}
+
+{% block content %}
+<p>Hi there,</p>
+<p></p>
+<p>A request has been sent for your approval for the following item:</p>
+<p>Slugline: {{ item.slugline }}</p>
+<p>Headline: {{ item.headline }}</p>
+<p></p>
+<p>Please go to <a href="{{ approval_url }}">{{ approval_url }}</a> and review the content and provide your approval.</p>
+<p>This link expires after {{ expires_in }} hours.</p>
+{%  endblock %}

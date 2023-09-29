@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Superdesk - Author Approval</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    </head>
+    <body>
+        <div>Placeholder template - please ignore until implemented</div>
+
+        {% if error == "no_token" %}
+            <div>Token not provided, invalid URL.</div>
+        {% elif error == "expired" %}
+            <div>Token has expired. Please contact your administrator.</div>
+        {% elif error == "invalid" %}
+            <div>Invalid token. Please make sure you have the correct URL.</div>
+        {% elif error %}
+            <div>Failed to process token:</div>
+            <div>{{ error }}</div>
+        {% else %}
+        <div>Token Valid: please proceed.</div>
+        <div>
+            <ul>
+                <li>Issuer: {{ data.iss }}</li>
+                <li>Issued At: {{ data.iat }}</li>
+                <li>Expires At: {{ data.exp }}</li>
+                <li>Scope: {{ data.scope }}</li>
+                <li>Author ID: {{ data.author_id }}</li>
+                <li>Item ID: {{ data.item_id }}</li>
+            </ul>
+        </div>
+        {% endif %}
+    </body>
+</html>

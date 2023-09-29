@@ -1,0 +1,12 @@
+{% extends "email_layout.txt" %}
+
+{% block content %}
+Hi there,
+
+A request has been sent for your approval for the following item:
+Slugline: {{ item.slugline }}
+Headline: {{ item.headline }}
+
+Please go to {{ approval_url }} and review the content and provide your approval.
+This link expires after {{ expires_in }} hours.
+{% endblock %}
