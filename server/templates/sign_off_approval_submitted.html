@@ -8,22 +8,6 @@
         <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
         <link rel="stylesheet" type="text/css" href="{{ css_file_path }}" />
     </head>
-    <style>
-    .content-item-preview .content .core-content img {
-        max-width: 100%;
-    }
-
-    .p-chips-multiple-container {
-        min-height: 32px;
-    }
-
-    .html-preview {
-        padding: 1.6rem 1.6rem 0 1.6rem;
-        min-height: 5.6rem;
-        border: 2px solid var(--color-input-border);
-        border-radius: var(--b-radius--large);
-    }
-    </style>
     <body>
         <div class="sd-page-grid">
             <header class="sd-top-menu">
@@ -42,29 +26,12 @@
                         </li>
                     </ul>
                 </div>
-
-                {% if token_error %}
-                    <div class="sd-margin-t--1 sd-margin-l--2">
-                        <h1>An error has occurred.</h1>
-                        {% if token_error == "no_token" %}
-                            <p class="lead">Token not provided, invalid URL</p>
-                        {% elif token_error == "expired" %}
-                            <p class="lead">Token has expired. Please contact your administrator.</p>
-                        {% elif token_error == "invalid" %}
-                            <p class="lead">Invalid token. Please make sure you have the correct URL.</p>
-                        {% else %}
-                            <p class="lead">Failed to process token: {{ token_error }}</p>
-                        {% endif %}
-                    </div>
-                {% else %}
-                    {% include "sign_off_approval_content_preview.html" %}
-                {% endif %}
-
+                <div class="sd-margin-t--1 sd-margin-l--2">
+                    <h3>Congratulations</h3>
+                    <p class="lead">Your approval has been sent.</p>
+                </div>
             </section>
             <footer class="sd-bottom-bar"></footer>
-            {% if not token_error %}
-                {% include "sign_off_approval_modal.html" %}
-            {% endif %}
         </div>
     </body>
 </html>

@@ -1,0 +1,125 @@
+<div class="open-editor sd-content-wrapper__authoring-content-area">
+    <div class="sd-editor__container">
+        <div class="sd-content-wrapper__main-content-area sd-main-content-grid comfort">
+            <div class="sd-main-content-grid__header">
+                <div class="subnav subnav--light">
+                    <div class="button-group button-group--end button-group--comfort" role="group">
+                        <button id="btn-provide-approval" class="btn btn--primary sd-margin-r--1">
+                            Provide Author Approval
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="sd-main-content-grid__content sd-padding--0">
+                <div class="sd-editor-content">
+                    <div class="sd-editor-content__toolbar">
+                        <div class="sd-editor-toolbar__content">
+                            <dl>
+                                <dt>First Created</dt>
+                                <dd>
+                                    <time title="{{ item.firstcreated | format_datetime(date_format="%c") }}">
+                                        {{ item.firstcreated | format_datetime(date_format="%H:%M, %d/%m/%Y") }}
+                                    </time>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>Last Modified</dt>
+                                <dd>
+                                    <time title="{{ item.versioncreated | format_datetime(date_format="%c") }}">
+                                        {{ item.versioncreated | format_datetime(date_format="%H:%M, %d/%m/%Y") }}
+                                    </time>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>Version</dt>
+                                <dd>{{ item._current_version }}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="sd-editor-content__main-container">
+                        <header id="authoring-header" class="sd-editor-content__authoring-header authoring-header--padding-medium">
+                            <div class="authoring-header__holder">
+                                {% if item.keywords %}
+                                    <div class="form__group">
+                                        {{ render_tag_list("Keywords", item.keywords) }}
+                                    </div>
+                                {% endif %}
+                                {% if item.slugline %}
+                                    <div class="form__group">
+                                        {{ render_text_input("Slugline", item.slugline) }}
+                                    </div>
+                                {% endif %}
+                                {% if item.genre %}
+                                    <div class="form__group">
+                                        {{ render_cv_items("Genre", item.genre) }}
+                                    </div>
+                                {% endif %}
+                                {% if item.anpa_category %}
+                                    <div class="form__group">
+                                        {{ render_cv_items("Categories", item.anpa_category) }}
+                                    </div>
+                                {% endif %}
+                                {% if item.subject %}
+                                    <div class="form__group">
+                                        {{ render_cv_items("Subject", item.subject) }}
+                                    </div>
+                                {% endif %}
+                                {% if item.ednote %}
+                                    <div class="form__group">
+                                        {{ render_text_input("Ed. Note", item.ednote) }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <button id="btn-authoring-header-toggle" class="authoring-header__toggle">
+                                <i class="icon-chevron-up-thin"></i>
+                            </button>
+                        </header>
+
+                        <article class="content-item-preview sd-editor-content__authoring-body sd-editor-content__authoring-body-padding">
+                            <div class="content">
+                                <div class="core-content">
+                                    {% if (item.associations or {}).featuremedia %}
+                                        <div class="sd-container sd-container--flex sd-container--gap-none sd-container--direction-column sd-margin-y--2">
+                                            {{ render_featuremedia_image(item) }}
+                                        </div>
+                                    {% endif %}
+                                    {% if item.headline %}
+                                        <div class="sd-container sd-container--flex sd-container--gap-none sd-container--direction-column sd-margin-y--2">
+                                            {{ render_content_text("Headline", item.headline) }}
+                                        </div>
+                                    {% endif %}
+                                    {% if item.byline %}
+                                        <div class="sd-container sd-container--flex sd-container--gap-none sd-container--direction-column sd-margin-y--2">
+                                            {{ render_content_text("Byline", item.byline) }}
+                                        </div>
+                                    {% endif %}
+                                    {% if item.abstract %}
+                                        <div class="sd-container sd-container--flex sd-container--gap-none sd-container--direction-column sd-margin-y--2">
+                                            {{ render_html_content("Abstract", item.abstract) }}
+                                        </div>
+                                    {% endif %}
+                                    {% if (item.dateline or {}).text %}
+                                        <div class="sd-container sd-container--flex sd-container--gap-none sd-container--direction-column sd-margin-y--2">
+                                            {{ render_content_text("Dateline", item.dateline.text) }}
+                                        </div>
+                                    {% endif %}
+                                    {% if item.body_html %}
+                                        <div class="sd-container sd-container--flex sd-container--gap-none sd-container--direction-column sd-margin-y--2">
+                                            {{ render_html_content("Body HTML", item.body_html) }}
+                                        </div>
+                                    {% endif %}
+                                    {% if item.sign_off %}
+                                        <div class="sd-container sd-container--flex sd-container--gap-none sd-container--direction-column sd-margin-y--2">
+                                            {{ render_content_text("Sign Off", item.sign_off) }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
