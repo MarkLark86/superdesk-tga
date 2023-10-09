@@ -35,6 +35,10 @@ class SignOffRequestTestCase(TestCase):
                     "guid": "tag:example.com,0000:newsml_BRE9A605",
                     "slugline": "slugger-info",
                     "headline": "Header Of The Informational Article",
+                    "body_html": "<p>The story so far.</p>",
+                    "genre": [{"name": "Article", "qcode": "Article"}],
+                    "anpa_category": [{"qcode": "i", "name": "International News"}],
+                    "subject": [{"qcode": "17004000", "name": "Statistics"}, {"qcode": "04001002", "name": "Weather"}],
                 }
             ],
         )[0]
@@ -78,8 +82,7 @@ class SignOffRequestTestCase(TestCase):
             assert response.status_code == 200
             response_text = response.get_data(as_text=True)
 
-            assert "Token Valid" in response_text
-            assert item_id in response_text
+            assert "Header Of The Informational Article" in response_text
             current_user_id = 0 if "foo@foobar.org" in email_sent.recipients else 1
             assert str(user_ids[current_user_id]) in response_text
 
