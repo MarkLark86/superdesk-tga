@@ -14,7 +14,7 @@ type IProps = IPreviewComponentProps<IUserSignOff | null>;
 export class UserSignOffPreview extends React.PureComponent<IProps> {
     render() {
         const {gettext} = superdesk.localization;
-        const sign_off_data = this.props.item.extra?.sign_off_data;
+        const sign_off_data = this.props.item.extra?.publish_sign_off;
         const isSignedOff = hasUserSignedOff(sign_off_data);
 
         return (

@@ -13,7 +13,7 @@ export class UserSignOffTemplate extends React.PureComponent<IEditorProps> {
         return (
             <div className="sd-display-flex-column">
                 <div className="sd-d-flex sd-flex-align-items-center">
-                    <SignOffDetails signOff={this.props.item.extra?.sign_off_data} />
+                    <SignOffDetails signOff={this.props.item.extra?.publish_sign_off} />
                     <Button
                         type="warning"
                         icon="warning-sign"

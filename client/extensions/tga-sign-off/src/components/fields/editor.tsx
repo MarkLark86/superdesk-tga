@@ -17,12 +17,21 @@ export class UserSignOffField extends React.Component<IEditorProps> {
     }
 
     sendSignOff() {
+        const authorIds = (this.props.item.authors ?? []).map((author) => author.parent);
+
+        if (authorIds.length === 0) {
+            superdesk.ui.notify.error(
+                superdesk.localization.gettext('Unable to send email(s), list of authors is empty!')
+            );
+            return;
+        }
+
         superdesk.httpRequestJsonLocal({
             method: "POST",
-            path: "/api/sign_off_request",
+            path: "/sign_off_request",
             payload: {
                 item_id: this.props.item._id,
-                authors: this.props.item.authors,
+                authors: authorIds,
             }
         });
     }
@@ -47,7 +56,7 @@ export class UserSignOffField extends React.Component<IEditorProps> {
     render() {
         const {gettext} = superdesk.localization;
         const {getCurrentUserId} = superdesk.session;
-        const sign_off_data = this.props.item.extra?.sign_off_data;
+        const sign_off_data = this.props.item.extra?.publish_sign_off ?? {};
         const isSameUser = getCurrentUserId() === sign_off_data?.user_id;
 
         return (
@@ -58,7 +67,7 @@ export class UserSignOffField extends React.Component<IEditorProps> {
                         <Button
                             type="warning"
                             icon="warning-sign"
-                            text={gettext('Sign Off')}
+                            text={gettext('Send Sign Off Email(s)')}
                             onClick={this.sendSignOff}
                             expand={true}
                             disabled={this.props.readOnly}
