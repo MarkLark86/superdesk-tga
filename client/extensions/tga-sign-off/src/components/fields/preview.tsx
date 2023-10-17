@@ -1,51 +1,132 @@
 import * as React from 'react';
 
-import {IPreviewComponentProps} from 'superdesk-api';
+import {IPreviewComponentProps, IUser} from 'superdesk-api';
 import {IUserSignOff} from '../../interfaces';
 import {superdesk} from '../../superdesk';
 
-import {hasUserSignedOff} from '../../utils';
+import {loadUsersFromPublishSignOff, getSignOffDetails} from '../../utils';
 
 import {IconLabel, ToggleBox} from 'superdesk-ui-framework/react';
-import {SignOffDetails} from '../details';
+import {SignOffListItem} from '../SignOffListItem';
+import {SignOffRequestDetails} from '../SignOffRequestDetails';
 
 type IProps = IPreviewComponentProps<IUserSignOff | null>;
+type ISignOffState = 'completed' | 'partially' | 'none';
 
-export class UserSignOffPreview extends React.PureComponent<IProps> {
+function getSignOffStateLabel(state: ISignOffState): string {
+    const {gettext} = superdesk.localization;
+
+    switch (state) {
+        case 'completed':
+            return gettext('Signed Off');
+        case 'partially':
+            return gettext('Partially Signed Off');
+        case 'none':
+            return gettext('Not Signed Off');
+    }
+}
+
+interface IState {
+    users: {[userId: string]: IUser};
+}
+
+export class UserSignOffPreview extends React.PureComponent<IProps, IState> {
+    constructor(props: IProps) {
+        super(props);
+
+        this.state = {users: {}};
+    }
+
+    componentDidMount() {
+        loadUsersFromPublishSignOff(this.props.item).then((users) => {
+            this.setState({users: users});
+        });
+    }
+
     render() {
         const {gettext} = superdesk.localization;
-        const sign_off_data = this.props.item.extra?.publish_sign_off;
-        const isSignedOff = hasUserSignedOff(sign_off_data);
+        const {
+            publishSignOff,
+            unsentAuthorIds,
+            pendingReviews,
+            requestUser,
+        } = getSignOffDetails(this.props.item, this.state.users);
+
+        let signOffState: ISignOffState = 'none';
+
+        if (publishSignOff != null) {
+            signOffState = (unsentAuthorIds.length + pendingReviews.length) === 0 ? 'completed' : 'partially';
+        }
 
         return (
             <div className="sd-display-flex-column">
-                <ToggleBox
-                    title={gettext('Sign Off Details')}
-                    className="sd-margin-b--2"
-                    initiallyOpen={true}
-                >
-                    <IconLabel
-                        text={isSignedOff ? gettext('Signed Off') : gettext('Not Signed Off')}
-                        icon={isSignedOff ? 'ok' : 'warning-sign'}
-                        type={isSignedOff ? 'success' : 'warning'}
-                        style="translucent"
+                <IconLabel
+                    text={getSignOffStateLabel(signOffState)}
+                    icon={signOffState === 'completed' ? 'ok' : 'warning-sign'}
+                    type={signOffState === 'completed' ? 'success' : 'warning'}
+                    style="translucent"
+                />
+
+                {requestUser == null || publishSignOff?.request_sent == null ? null : (
+                    <SignOffRequestDetails
+                        publishSignOff={publishSignOff}
+                        user={requestUser}
                     />
-                    <div className="sd-d-flex sd-flex-align-items-center">
-                        <SignOffDetails signOff={sign_off_data} />
-                    </div>
-                    {!sign_off_data?.funding_source?.length ? null : (
-                        <div className="sd-display-flex-column sd-margin-l--5 sd-padding-l--0-5 sd-margin-t--1">
-                            <label className="form-label form-label--block">Funding Source:</label>
-                            <span>{sign_off_data.funding_source}</span>
-                        </div>
-                    )}
-                    {!sign_off_data?.affiliation?.length ? null : (
-                        <div className="sd-display-flex-column sd-margin-l--5 sd-padding-l--0-5 sd-margin-t--1">
-                            <label className="form-label form-label--block">Affiliation:</label>
-                            <span>{sign_off_data.affiliation}</span>
-                        </div>
-                    )}
-                </ToggleBox>
+                )}
+
+                {publishSignOff?.sign_offs == null || publishSignOff.sign_offs.length === 0 ? null : (
+                    <ToggleBox
+                        title={gettext(
+                            'Approvals ({{ count }})',
+                            {count: publishSignOff.sign_offs.length}
+                        )}
+                    >
+                        {publishSignOff.sign_offs.map((signOffData, index) => (
+                            this.state.users[signOffData.user_id] == null ? null : (
+                                <SignOffListItem
+                                    state="approved"
+                                    user={this.state.users[signOffData.user_id]}
+                                    readOnly={true}
+                                    appendContentDivider={index < publishSignOff.sign_offs.length - 1}
+                                    fundingSource={signOffData.funding_source}
+                                    affiliation={signOffData.affiliation}
+                                    date={signOffData.sign_date}
+                                />
+                            )
+                        ))}
+                    </ToggleBox>
+                )}
+
+                {(pendingReviews.length + unsentAuthorIds.length) === 0 ? null : (
+                    <ToggleBox
+                        title={gettext(
+                            'Pending Approvals ({{ count }})',
+                            {count: pendingReviews.length + unsentAuthorIds.length}
+                        )}
+                    >
+                        {pendingReviews.map((pendingReview) => (
+                            this.state.users[pendingReview.user_id] == null ? null : (
+                                <SignOffListItem
+                                    state="pending"
+                                    user={this.state.users[pendingReview.user_id]}
+                                    readOnly={true}
+                                    appendContentDivider={true}
+                                    date={pendingReview.expires}
+                                />
+                            )
+                        ))}
+                        {unsentAuthorIds.map((authorId) => (
+                            this.state.users[authorId] == null ? null : (
+                                <SignOffListItem
+                                    state="not_sent"
+                                    user={this.state.users[authorId]}
+                                    readOnly={true}
+                                    appendContentDivider={true}
+                                />
+                            )
+                        ))}
+                    </ToggleBox>
+                )}
             </div>
         );
     }
