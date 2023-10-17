@@ -25,6 +25,27 @@ export class UserSignOffField extends React.Component<IEditorProps, IState> {
     }
 
     componentDidMount() {
+        this.reloadUsers();
+    }
+
+    componentDidUpdate() {
+        const {signOffIds, unsentAuthorIds} = getSignOffDetails(this.props.item, this.state.users);
+        const userIds = signOffIds.concat(unsentAuthorIds);
+        let reloadUsers = false;
+
+        for (let i = 0; i < userIds.length; i++) {
+            if (this.state.users[userIds[i]] == null) {
+                reloadUsers = true;
+                break;
+            }
+        }
+
+        if (reloadUsers) {
+            this.reloadUsers();
+        }
+    }
+
+    reloadUsers() {
         loadUsersFromPublishSignOff(this.props.item).then((users) => {
             this.setState({users: users});
         });
