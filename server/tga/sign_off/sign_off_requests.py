@@ -4,13 +4,16 @@ import logging
 
 from authlib.jose import JsonWebToken
 from authlib.jose.errors import ExpiredTokenError, DecodeError
-from flask import Blueprint, request, render_template, current_app as app, url_for, jsonify
+from bson import ObjectId
+from bson.errors import InvalidId
+from flask import Blueprint, request, render_template, current_app as app, url_for, jsonify, make_response
 
 from superdesk.errors import SuperdeskApiError
 from superdesk.auth.decorator import blueprint_auth
 from superdesk.emails import send_email
-from superdesk.upload import handle_cors
 from superdesk.upload import generate_response_for_file
+
+from apps.auth import get_user_id
 
 from .form import UserSignOffForm
 from .utils import (
@@ -19,13 +22,24 @@ from .utils import (
     get_item_from_token_data,
     get_users_from_token_data,
     modify_asset_urls,
+    remove_sign_off_from_item,
     update_item_publish_approval,
+    update_item_with_request_details,
     gen_jwt_for_approval_request,
 )
 
 
 logger = logging.getLogger(__name__)
 sign_off_request_bp = Blueprint("sign_off_requests", __name__)
+
+
+def make_cors_response(methods, *args):
+    response = make_response(*args)
+    response.headers.add("Access-Control-Allow-Origin", app.config["CLIENT_URL"])
+    response.headers.add("Access-Control-Allow-Headers", ",".join(app.config["X_HEADERS"]))
+    response.headers.add("Access-Control-Allow-Methods", methods)
+    response.headers.set("Access-Control-Allow-Credentials", "true")
+    return response
 
 
 @sign_off_request_bp.route("/api/sign_off_requests/approve", methods=["GET", "OPTIONS", "POST"])
@@ -84,7 +98,7 @@ def sign_off_approval():
 @sign_off_request_bp.route("/api/sign_off_requests/upload-raw/<path:media_token>", methods=["GET", "OPTIONS"])
 def get_upload_as_data_uri(media_token):
     if request.method == "OPTIONS":
-        return handle_cors()
+        return make_cors_response("GET")
 
     token_data = JsonWebToken([JWT_ALGORITHM]).decode(media_token, app.config["SIGN_OFF_REQUESTS_SHARED_SECRET"])
     token_data.validate_exp(now=time(), leeway=0)
@@ -100,14 +114,32 @@ def get_upload_as_data_uri(media_token):
     raise SuperdeskApiError.notFoundError("File not found on media storage.")
 
 
+@sign_off_request_bp.route("/api/sign_off_request/<item_id>/<user_id_str>", methods=["DELETE", "OPTIONS"])
+@blueprint_auth()
+def remove_author_sign_off(item_id, user_id_str):
+    if request.method == "OPTIONS":
+        return make_cors_response("DELETE")
+
+    try:
+        user_id = ObjectId(user_id_str)
+    except InvalidId:
+        raise SuperdeskApiError.badRequestError("Invalid User ID provided")
+
+    item = get_item_from_token_data({"item_id": item_id})
+    remove_sign_off_from_item(item, user_id)
+
+    return make_cors_response("DELETE", "", 204)
+
+
 @sign_off_request_bp.route("/api/sign_off_request", methods=["POST", "OPTIONS"])
 @blueprint_auth()
 def send_sign_off_request_emails():
     if request.method == "OPTIONS":
-        return handle_cors()
+        return make_cors_response("POST")
 
     data = request.json
     item = get_item_from_token_data(data)
+    user_ids: List[ObjectId] = []
 
     for user in get_users_from_token_data(data):
         token = gen_jwt_for_approval_request(item["_id"], user["_id"], "approval_request")
@@ -131,5 +163,8 @@ def send_sign_off_request_emails():
             text_body=text_body,
             html_body=html_body,
         )
+        user_ids.append(ObjectId(user["_id"]))
 
-    return jsonify({"_status": "OK"}), 201
+    update_item_with_request_details(item, get_user_id(True), user_ids)
+
+    return make_cors_response("POST", jsonify({"_status": "OK"}), 201)
