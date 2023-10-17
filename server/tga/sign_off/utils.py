@@ -65,7 +65,7 @@ def _get_publish_sign_off_data(item: Dict[str, Any]) -> Optional[PublishSignOffD
                 sign_off["user_id"] = ObjectId(sign_off["user_id"])
 
             return publish_sign_off
-        else:
+        elif item["extra"]["publish_sign_off"].get("user_id"):
             # This is the legacy format (AuthorSignOffData), change it to PublishSignOffData
             author_sign_off: AuthorSignOffData = item["extra"]["publish_sign_off"]
             author_sign_off["user_id"] = ObjectId(author_sign_off["user_id"])
@@ -127,6 +127,8 @@ def modify_asset_urls(item, author_id: ObjectId):
     item["body_html"] = new_body_html
 
     for key, association in (item.get("associations") or {}).items():
+        if association is None:
+            continue
         for size_name, rendition in (association.get("renditions") or {}).items():
             rendition_href = rendition["href"]
             asset_filename = rendition_href[rendition_href.index(url_prefix) + url_prefix_len :]

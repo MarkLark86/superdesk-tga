@@ -86,7 +86,7 @@ def render_tag_list(label: str, values: List[str]):
 def render_featuremedia_image(item):
     featuremedia = item["associations"]["featuremedia"]
     image_url = featuremedia["renditions"]["viewImage"]["href"]
-    alt_text = featuremedia["alt_text"]
+    alt_text = featuremedia.get("alt_text") or featuremedia.get("description_text") or featuremedia.get("caption")
 
     return f"""
 <div class="sd-input sd-input--x-large sd-input--boxed-style sd-input--boxed-label">
