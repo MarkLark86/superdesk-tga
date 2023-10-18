@@ -21,7 +21,6 @@ export class UserSignOffField extends React.Component<IEditorProps, IState> {
         this.state = {users: {}};
 
         this.removeSignOff = this.removeSignOff.bind(this);
-        this.sendSignOff = this.sendSignOff.bind(this);
     }
 
     componentDidMount() {
@@ -51,12 +50,15 @@ export class UserSignOffField extends React.Component<IEditorProps, IState> {
         });
     }
 
-    sendSignOff() {
+    sendSignOff(authorIds?: Array<IUser['_id']>) {
         const {notify} = superdesk.ui;
         const {gettext} = superdesk.localization;
         const {signOffIds} = getSignOffDetails(this.props.item, this.state.users);
-        const authorIds = getListAuthorIds(this.props.item)
-            .filter((authorId) => !signOffIds.includes(authorId));
+
+        if (authorIds == null) {
+            authorIds = getListAuthorIds(this.props.item)
+                .filter((authorId) => !signOffIds.includes(authorId));
+        }
 
         if (authorIds.length === 0) {
             notify.error(
@@ -68,8 +70,8 @@ export class UserSignOffField extends React.Component<IEditorProps, IState> {
         }
 
         superdesk.httpRequestJsonLocal({
-            method: "POST",
-            path: "/sign_off_request",
+            method: 'POST',
+            path: '/sign_off_request',
             payload: {
                 item_id: this.props.item._id,
                 authors: authorIds,
@@ -78,24 +80,6 @@ export class UserSignOffField extends React.Component<IEditorProps, IState> {
             notify.success(gettext('Sign off request email(s) sent'));
         }, (error) => {
             notify.error(gettext('Failed to send sign off request email(s). {{ error }}', error));
-        });
-    }
-
-    sendSingleSignOff(authorId: IUser['_id']) {
-        const {notify} = superdesk.ui;
-        const {gettext} = superdesk.localization;
-
-        superdesk.httpRequestJsonLocal({
-            method: 'POST',
-            path: '/sign_off_request',
-            payload: {
-                item_id: this.props.item._id,
-                authors: [authorId],
-            }
-        }).then(() => {
-            notify.success(gettext('Sign off request email(s) sent'));
-        }, (error) => {
-            notify.error(gettext('Failed to send sign off request email(s). {{ error }}', {error}));
         });
     }
 
@@ -114,36 +98,14 @@ export class UserSignOffField extends React.Component<IEditorProps, IState> {
             gettext('Remove publishing sign off')
         ).then((response) => {
             if (response) {
-                const baseUrl = superdesk.instance.config.server.url;
-
-                fetch(`${baseUrl}/sign_off_request/${this.props.item._id}/${sign_off_data.user_id}`, {
+                superdesk.httpRequestVoidLocal({
                     method: 'DELETE',
-                    headers: {
-                        Authorization: superdesk.session.getToken(),
-                        'Content-Type': 'application/json',
-                    },
-                    mode: 'cors',
-                    credentials: 'include',
-                })
-                    .then((res) => {
-                        if (res.ok) {
-                            notify.success(gettext('Publishing sign off removed'));
-                        } else {
-                            // Attempt to convert error response to JSON,
-                            // otherwise return body as text as returned from the server
-                            res.text()
-                                .then((bodyText) => {
-                                    try {
-                                        return Promise.reject(JSON.parse(bodyText));
-                                    } catch (_err) {
-                                        return Promise.reject(bodyText);
-                                    }
-                                });
-                        }
-                    })
-                    .catch((error) => {
-                        notify.error(gettext('Failed to remove sign off. {{ error }}', {error}))
-                    });
+                    path: `/sign_off_request/${this.props.item._id}/${sign_off_data.user_id}`,
+                }).then(() => {
+                    notify.success(gettext('Publishing sign off removed'));
+                }).catch((error: string) => {
+                    notify.error(gettext('Failed to remove sign off. {{ error }}', {error}))
+                });
             }
         });
     }
@@ -165,7 +127,7 @@ export class UserSignOffField extends React.Component<IEditorProps, IState> {
                             type="warning"
                             icon="warning-sign"
                             text={gettext('Send Sign Off Email(s)')}
-                            onClick={this.sendSignOff}
+                            onClick={this.sendSignOff.bind(this, undefined)}
                             expand={true}
                             disabled={this.props.readOnly}
                         />
@@ -224,7 +186,7 @@ export class UserSignOffField extends React.Component<IEditorProps, IState> {
                                     buttonProps={this.props.readOnly ? undefined : {
                                         text: gettext('Resend'),
                                         icon: 'refresh',
-                                        onClick: this.sendSingleSignOff.bind(this, pendingReview.user_id),
+                                        onClick: this.sendSignOff.bind(this, [pendingReview.user_id]),
                                     }}
                                     date={pendingReview.expires}
                                 />
@@ -241,7 +203,7 @@ export class UserSignOffField extends React.Component<IEditorProps, IState> {
                                     buttonProps={this.props.readOnly ? undefined : {
                                         text: gettext('Send'),
                                         icon: 'assign',
-                                        onClick: this.sendSingleSignOff.bind(this, authorId),
+                                        onClick: this.sendSignOff.bind(this, [authorId]),
                                     }}
                                 />
                             )
