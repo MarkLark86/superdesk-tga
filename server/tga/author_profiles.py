@@ -126,24 +126,22 @@ def _add_cv_item_on_update(updates: Dict[str, Any], original: Dict[str, Any], cu
 
 
 def get_author_profiles_by_user_id(user_ids: List[ObjectId]) -> Dict[ObjectId, Dict[str, Any]]:
-    try:
-        service = get_resource_service("author_profiles")
-    except KeyError:
-        service = get_resource_service("items")
-
     urn_domain = app.config["URN_DOMAIN"]
-    response = service.search(
-        {
-            "query": {
-                "bool": {
-                    "must": [
-                        {"terms": {"authors.uri": [f"urn:{urn_domain}:user:{user_id}" for user_id in user_ids]}},
-                        {"term": {"authors.role": AUTHOR_PROFILE_ROLE}},
-                    ],
-                },
+    query = {
+        "query": {
+            "bool": {
+                "must": [
+                    {"terms": {"authors.uri": [f"urn:{urn_domain}:user:{user_id}" for user_id in user_ids]}},
+                    {"term": {"authors.role": AUTHOR_PROFILE_ROLE}},
+                ],
             },
-        }
-    )
+        },
+    }
+
+    try:
+        response = get_resource_service("author_profiles").search(query)
+    except KeyError:
+        response = get_resource_service("items").search(query)
 
     if response.count():
         return {ObjectId(user["extra"]["profile_id"]): user for user in response}
