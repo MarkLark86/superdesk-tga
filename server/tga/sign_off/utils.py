@@ -9,13 +9,14 @@ from authlib.jose import JsonWebToken
 from bson import ObjectId
 from bson.errors import InvalidId
 from eve.utils import config
-from flask import g, current_app as app
+from flask import g, current_app as app, render_template
 from flask_babel import _
 
 from superdesk import get_resource_service
 from superdesk.errors import SuperdeskApiError
 from superdesk.utc import utcnow
 from superdesk.notification import push_notification
+from superdesk.emails import send_email
 
 from tga.types import (
     SignOffAuthor,
@@ -213,6 +214,25 @@ def update_item_publish_approval(item: Dict[str, Any], form: UserSignOffForm):
 
     g.user = get_resource_service("users").find_one(req=None, _id=user_id)
     _update_publish_sign_off(item, publish_sign_off)
+
+    data = dict(
+        app_name=app.config["APPLICATION_NAME"],
+        item=item,
+        form=form,
+    )
+    text_body = render_template("email_sign_off_copy.txt", **data)
+    html_body = render_template("email_sign_off_copy.html", **data)
+    admins = app.config["ADMINS"]
+    item_name = item.get("headline") or item.get("slugline")
+
+    send_email.delay(
+        subject=f"Completed: Author Approval Request for '{item_name}'",
+        sender=admins[0],
+        recipients=[form.author_email.data],
+        text_body=text_body,
+        html_body=html_body,
+    )
+
     del g.user
 
 

@@ -1,0 +1,218 @@
+{% extends "email_layout.html" %}
+
+{% block content %}
+<p>Hi there,</p>
+<p></p>
+<p>Thank you for completing the publishing approval request for the following item:</p>
+<p>Slugline: {{ item.slugline }}</p>
+<p>Headline: {{ item.headline }}</p>
+<p></p>
+<p>See below a copy of the answers you provided:</p>
+<hr />
+
+    <p>
+        Thank you for authoring an article for 360info. We require you to agree to the following
+        terms and provide the information requested before we can publish your article.
+    </p>
+    <p>
+        <strong>Please add the name of the article</strong><br />
+        {{ form.article_name.data }}
+    </p>
+
+    <h2>About the article</h2>
+    <p>
+        Please provide the following information regarding the above-mentioned article.
+        The information you provide may be published with the article.
+    </p>
+
+    <h3>Funding</h3>
+    <p>
+        Any relevant funding contributions must be disclosed, i.e. "The research was undertaken with
+        financial assistance from the Asia Development Bank".
+    </p>
+    <p>
+        <strong>Was your research funded by an outside organisation? If so, please provide details. If not, please state 'No'.</strong><br />
+        {{ form.funding_source.data }}
+    </p>
+
+    <h3>Conflict of Interest</h3>
+    <p>
+        Conflicts of interest arise when you have interests that are not fully apparent and may have
+        influenced or have the appearance of influencing the article. These may include a range of
+        competing interests be they financial (such as through funding, employment or shares in a
+        company), personal, political etc, and must be disclosed when publishing the article, i.e. "The
+        researcher is a member of the board for company x, who are one of the funding sources for the
+        project".
+    </p>
+    <p>
+        <strong>
+            Do you have a financial, personal or political affiliation or other that may be perceived
+                as a conflict in connection with your contribution? If not, then state 'No’.
+        </strong><br />
+        {{ form.affiliation.data }}
+    </p>
+
+    <h3>Copyright</h3>
+    <p>
+        If you provide any third-party material such as graphics, photographs or videos to include with your
+        article, consents, releases or permissions must be obtained by you.
+    </p>
+    <p>
+        The article will be subject to the
+        <a href="https://creativecommons.org/licenses/by/4.0/">
+            Creative Commons Attributions 4.0 International Licence.
+        </a>
+        Accordingly, all permission for use by you of Third Party material must allow for republications.
+    </p>
+    <p>
+        We also require you to comply with all provisions of any agreement that are material to the article
+        including, without limitation, any agreement that relates to:
+    </p>
+    <div>
+        <ol type="a" style="list-style: lower-alpha">
+            <li>use of Third-Party rights; or</li>
+            <li>the production of the Article</li>
+        </ol>
+    </div>
+    <p>
+        You acknowledge that 360info is not responsible for meeting any expenses incurred in relation to
+        consents, releases, or permissions required for any materials supplied by you.
+    </p>
+    <p>
+        You grant 360info an exclusive licence to publish and distribute the article in digital form worldwide.
+    </p>
+    <p>
+        <strong>
+            Are there any copyright terms relating to your contribution that must be disclosed <br />
+            when publishing, if so, what are they? If not, then state N/A.
+        </strong><br />
+        {{ form.copyright_terms.data }}
+    </p>
+
+    <h2>Author Details</h2>
+    <p><strong>Name:</strong> {{ form.author_name.data }}</p>
+    <p><strong>Position held / title:</strong> {{ form.author_title.data }}</p>
+    <p><strong>University / Institute:</strong> {{ form.author_institute.data }}</p>
+    <p><strong>Email:</strong> {{ form.author_email.data }}</p>
+    <p><strong>Country:</strong> {{ form.author_country.data }}</p>
+    <p><strong>ORCID ID (if known):</strong> {{ form.author_orcid_id.data }}</p>
+
+    <h3>The Author Warrants that</h3>
+    <ul style="list-style-type: decimal; margin: revert; padding: revert">
+        <li style="padding-bottom: 1rem;">
+            The source of any third party copyright materials in the article has been acknowledged and
+            the article does not infringe any copyright or other rights held by third parties, nor does it
+            breach any duty of confidentiality or obligation of privacy and does not contain any material
+            which is defamatory, obscene or otherwise of an unlawful nature. Any materials contained
+            in the article (including illustrations, tables, or other material) from third-party sources will
+            be identified as such through citation, indicating the source. If the Author becomes aware of
+            anything to the contrary, the Author will advise 360info immediately and understands that
+            360info reserves the right to refuse to publish the article or any part of it if in 360info's
+            opinion, it does not meet the warranty above.
+            <br />
+            {{ 'YES' if form.warrants_no_copyright_infringements.data else 'NO' }}
+        </li>
+        <li style="padding-bottom: 1rem;">
+            I hereby indemnify 360info against all damages, costs, expenses, loss or damage which they
+            may incur or sustain from actions, proceedings, claims and demands whatsoever which may
+            be brought or made against them by any person in respect of or by reason of or arising out
+            of the publication of the Article, or from the breach or any of the warranties contained in
+            this declaration.
+            <br />
+            {{ 'YES' if form.warrants_indemnify_360_against_loss.data else 'NO' }}
+        </li>
+        <li style="padding-bottom: 1rem;">
+            I hereby acknowledge that the article I have written for 360info is ready for publishing and
+            grant 360info the exclusive right to publish the article on the 360info website and that it
+            complies with the Editorial Policies and the declaration above. In doing so I acknowledge
+            that this article may be further edited and republished by other organisations under the
+            <a href="https://creativecommons.org/licenses/by/4.0/">
+                Creative Commons Attributions 4.0 International Licence.
+            </a>
+            <br />
+            {{ 'YES' if form.warrants_ready_for_publishing.data else 'NO' }}
+        </li>
+    </ul>
+
+    <h3>Author Consent</h3>
+    <p>
+        <strong>I agree to abide by these terms</strong><br />
+        {{ form.consent_signature.data }}
+    </p>
+
+    <h2>Privacy Collection Statement</h2>
+    <p>
+        360info is a wholly owned entity of Monash University. Monash University is responsible for the
+        handling of all personal data that is collected, used, stored and otherwise processed for the delivery
+        of the 360info service including:
+    </p>
+
+    <ul style="list-style-type: circle; margin: revert; padding: revert">
+        <li style="padding-bottom: 1rem;">
+            To contact you regarding your engagement with 360info
+        </li>
+        <li style="padding-bottom: 1rem;">
+            To identify you, your university / institute and country as contributing to the 360info service
+            for analytics and reporting purposes only. These analytics and reports can be shared with
+            you and with third parties including current and future partners of 360info.
+        </li>
+        <li style="padding-bottom: 1rem;">
+            To use photographs, video recordings and audio recordings relating to your engagement
+            with 360info and to reproduce, publish, communicate or broadcast those in any form as part
+            of the 360info service and marketing and promotional purposes.
+        </li>
+    </ul>
+
+    <p>
+        360info values the privacy of every individual’s personal information and is committed to the
+        protection of that information from unauthorised use and disclosure except where permitted by law.
+        For more information about Data Protection and Privacy at Monash University please see our
+        <a href="https://publicpolicydms.monash.edu/Monash/documents/1909233">
+            Data Protection and Privacy Procedure.
+        </a>
+        If you have any questions about how Monash University is
+        collecting and handling your personal information, please contact our Data Protection and Privacy
+        Office at
+        <a
+            href="mailto:dataprotectionofficer@monash.edu"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            dataprotectionofficer@monash.edu.
+        </a>
+    </p>
+
+    <p>
+        <strong>I consent to be contacted regarding my engagement with 360info</strong><br />
+        {{ 'YES' if form.consent_contact.data else 'NO' }}
+    </p>
+    <p>
+        <strong>
+            I consent to the personal information that I provide in this form being used for analytics
+            and reporting purposes and shared with third parties including current and future partners of
+            360info.
+        </strong><br />
+        {{ 'YES' if form.consent_personal_information.data else 'NO' }}
+    </p>
+    <p>
+        <strong>
+            I consent to photographs, video recordings and audio recordings relating to my
+            engagement with 360info to be reproduced, published, communicated or broadcast in any form as
+            part of the 360info service and marketing and promotional purposes.
+        </strong><br />
+        {{ 'YES' if form.consent_multimedia_usage else 'NO' }}
+    </p>
+
+    <p>
+        If you do not provide your consent for the above purposes, 360info will not be able to share insights
+        and analytics relating to your publication with you or others.
+    </p>
+    <p>
+        We thank you for your time.
+    </p>
+    <p>
+        End of survey
+    </p>
+
+    <hr />
+{%  endblock %}
