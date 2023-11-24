@@ -26,6 +26,8 @@ from .utils import (
     update_item_publish_approval,
     update_item_with_request_details,
     gen_jwt_for_approval_request,
+    get_author_profiles_by_user_id,
+    get_publish_sign_off_data,
 )
 
 
@@ -59,6 +61,7 @@ def sign_off_approval():
             form=form,
             item=item,
             css_file_path=get_css_filename(),
+            readonly=False,
         )
 
     token = request.args.get("token")
@@ -81,9 +84,12 @@ def sign_off_approval():
         logger.error("Failed to process token")
         return render_html_page(token_error=str(err))
 
-    form = UserSignOffForm()
     item = get_item_from_token_data(token_data)
     modify_asset_urls(item, token_data["author_id"])
+    user_id = ObjectId(token_data["author_id"])
+    author_profiles = get_author_profiles_by_user_id([user_id])
+    profile = (author_profiles.get(user_id) or {}).get("extra") or {}
+    form = UserSignOffForm(author_email=profile.get("profile_email"))
 
     if request.method == "POST":
         if form.validate_on_submit():
@@ -93,6 +99,62 @@ def sign_off_approval():
             return render_html_page(data=token_data, form=form, item=item, form_errors=form.errors)
 
     return render_html_page(data=token_data, form=form, item=item)
+
+
+@sign_off_request_bp.route("/api/sign_off_requests/<item_id>/<user_id_str>/view", methods=["GET", "OPTIONS"])
+@blueprint_auth()
+def view_sign_off_request(item_id, user_id_str):
+    if request.method == "OPTIONS":
+        return make_cors_response("GET")
+
+    try:
+        user_id = ObjectId(user_id_str)
+    except InvalidId:
+        raise SuperdeskApiError.badRequestError("Invalid User ID provided")
+
+    item = get_item_from_token_data({"item_id": item_id})
+    publish_sign_off = get_publish_sign_off_data(item)
+
+    if not publish_sign_off:
+        raise SuperdeskApiError.badRequestError("Item doesnt contain any publish sign off")
+
+    author_sign_off = next(
+        (sign_off for sign_off in publish_sign_off["sign_offs"] if sign_off["user_id"] == user_id), None
+    )
+
+    if not author_sign_off:
+        raise SuperdeskApiError.badRequestError("Item doesnt contain sign off for user")
+
+    form = UserSignOffForm(
+        item_id=item_id,
+        user_id=user_id_str,
+        version_signed=author_sign_off["version_signed"],
+        sign_date=author_sign_off["sign_date"],
+        article_name=author_sign_off["article_name"],
+        funding_source=author_sign_off["funding_source"],
+        affiliation=author_sign_off["affiliation"],
+        copyright_terms=author_sign_off["copyright_terms"],
+        author_name=author_sign_off["author"]["name"],
+        author_title=author_sign_off["author"]["title"],
+        author_institute=author_sign_off["author"]["institute"],
+        author_email=author_sign_off["author"]["email"],
+        author_country=author_sign_off["author"]["country"],
+        author_orcid_id=author_sign_off["author"]["orcid_id"],
+        warrants_no_copyright_infringements=author_sign_off["warrants"]["no_copyright_infringements"],
+        warrants_indemnify_360_against_loss=author_sign_off["warrants"]["indemnify_360_against_loss"],
+        warrants_ready_for_publishing=author_sign_off["warrants"]["ready_for_publishing"],
+        consent_signature=author_sign_off["consent"]["signature"],
+        consent_contact=author_sign_off["consent"]["contact"],
+        consent_personal_information=author_sign_off["consent"]["personal_information"],
+        consent_multimedia_usage=author_sign_off["consent"]["multimedia_usage"],
+    )
+
+    return render_template(
+        "sign_off_approval_view_form.html",
+        css_file_path=get_css_filename(),
+        form=form,
+        readonly=True,
+    )
 
 
 @sign_off_request_bp.route("/api/sign_off_requests/upload-raw/<path:media_token>", methods=["GET", "OPTIONS"])

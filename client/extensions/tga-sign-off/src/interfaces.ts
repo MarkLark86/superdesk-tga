@@ -1,14 +1,35 @@
 import {IEditorComponentProps, IUser} from 'superdesk-api';
 
-export interface IUserSignOff {
-    requester_id: undefined;
+export interface IAuthorSignOffData {
     user_id: IUser['_id'];
     sign_date: string;
     version_signed: number;
+
+    article_name: string;
     funding_source: string;
     affiliation: string;
-    consent_publish: boolean;
-    consent_disclosure: boolean;
+    copyright_terms: string;
+
+    author: {
+        name: string;
+        title: string;
+        institute: string;
+        email: string;
+        country: string;
+        orcid_id?: string;
+    };
+
+    warrants: {
+        no_copyright_infringements: boolean;
+        indemnify_360_against_loss: boolean;
+        ready_for_publishing: boolean;
+    };
+    consent: {
+        signature: string;
+        contact: boolean;
+        personal_information: boolean;
+        multimedia_usage: boolean;
+    };
 }
 
 export interface IPublishSignOff {
@@ -19,7 +40,7 @@ export interface IPublishSignOff {
         sent: string; // datetime string
         expires: string; // datetime string
     }>;
-    sign_offs: Array<IUserSignOff>;
+    sign_offs: Array<IAuthorSignOffData>;
 }
 
 export type IEditorProps = IEditorComponentProps<IPublishSignOff | null, {}>;

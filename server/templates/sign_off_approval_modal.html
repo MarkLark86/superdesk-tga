@@ -1,7 +1,7 @@
 <div id="modal-container" style="display: none">
     <div>
         <div class="modal__backdrop fade in"></div>
-        <div class="modal modal--large" style="display: block;">
+        <div class="modal modal--fill" style="display: block;">
             <div class="modal__dialog">
                 <div class="modal__content">
                     <div class="modal__header modal__header--flex">
@@ -19,113 +19,7 @@
                             {% endfor %}
                             </ul>
                         {% else %}
-                            <form id="form-submit-approval" method="post">
-                                {{ form.csrf_token }}
-                                {{ form.item_id(value=item._id) }}
-                                {{ form.user_id(value=data.author_id) }}
-                                {{ form.version_signed(value=item._current_version) }}
-
-                                <div class="form__group">
-                                    <div class="form__row">
-                                        <div class="form-label form-label--block">
-                                            Funding Source
-                                        </div>
-                                        <p class="sd-margin--0">
-                                            What is the funding source for the research undertaken by you and
-                                            being referred to in your contribution?<br/>
-                                            If no research or not your research then state N/A.
-                                        </p>
-                                        <div class="sd-input sd-input--medium">
-                                            <div class="sd-input__input-container">
-                                                {{ form.funding_source(class="sd-input__input", id="funding_source", required="true") }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form__group">
-                                    <div class="form__row">
-                                        <div class="form-label form-label--block">
-                                            Affiliation
-                                        </div>
-                                        <span>
-                                            Do you have any financial, personal or political affiliation or
-                                            other that may be perceived as a conflict in connection with
-                                            your contribution?
-                                        </span>
-                                        <div class="sd-input sd-input--medium">
-                                            <div class="sd-input__input-container">
-                                                {{ form.affiliation(class="sd-input__input", id="affiliation", required="true") }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form__group">
-                                    <div class="form__row">
-                                        <p class="sd-margin--0">
-                                            We collect the above information in order to enable 360info to
-                                            adhere to its charter by being transparent about funding and
-                                            affiliations.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="form__group">
-                                    <div class="form__row">
-                                        <div class="form-label form-label--block">
-                                            Consent
-                                        </div>
-                                        <span class="sd-check-new__wrapper">
-                                            {{ form.consent_publish(class="sd-check-new__input", id="input-consent-publish", type="checkbox", required="true") }}
-                                            <span class="sd-check-new"></span>
-                                            <label>
-                                                I consent to the personal information that I provide for 360info being used for the purposes of publishing my contribution.
-                                            </label>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="form__group">
-                                    <div class="form__row">
-                                        <span class="sd-check-new__wrapper">
-                                            {{ form.consent_disclosure(class="sd-check-new__input", id="input-consent-public", type="checkbox", required="true") }}
-                                            <span class="sd-check-new"></span>
-                                            <label>
-                                                I consent to the personal information that I provide for 360info being disclosed to the public on my published contribution.
-                                            </label>
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="form__group">
-                                    <div class="form__row">
-                                        <p class="sd-margin--0">
-                                            360info values the privacy of every individual’s personal information
-                                            and is committed to the protection of that information from
-                                            unauthorised use and disclosure except where permitted by law.
-                                            For more information about Data Protection and Privacy at Monash
-                                            University please see our
-                                            <a
-                                                href="https://www.monash.edu/__data/assets/pdf_file/0003/790086/Privacy.pdf"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                Data Protection and Privacy Procedure.
-                                            </a>
-                                            If you have any questions about how 360info is collecting and
-                                            handling your personal information, please contact our Data
-                                            Protection and Privacy Office at
-                                            <a
-                                                href="mailto:dataprotectionofficer@monash.edu"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                dataprotectionofficer@monash.edu
-                                            </a>.
-                                        </p>
-                                    </div>
-                                </div>
-                            </form>
+                            {% include "sign_off_approval_modal_form.html" %}
                         {% endif %}
                     </div>
                     <div class="modal__footer" style="justify-content: flex-end">
@@ -153,6 +47,9 @@
 
     function showModal() {
         modalContainer.style.display = 'block';
+        setTimeout(() => {
+            document.getElementById('article_name').focus();
+        });
     }
     function hideModal() {
         modalContainer.style.display = 'none';
@@ -173,18 +70,14 @@
     {% if form_errors %}
         showModal();
     {% else %}
-        const inputConsentPublish = document.getElementById('input-consent-publish');
-        const inputConsentPublic = document.getElementById('input-consent-public');
+        const approvalForm = document.getElementById('form-submit-approval');
 
-        function onConsentChanged() {
-            if (inputConsentPublish.checked === true && inputConsentPublic.checked === true) {
+        approvalForm.addEventListener('input', (e) => {
+            if (approvalForm.checkValidity()) {
                 btnApprove.removeAttribute('disabled');
             } else {
                 btnApprove.setAttribute('disabled', '');
             }
-        }
-
-        inputConsentPublish.addEventListener('change', onConsentChanged);
-        inputConsentPublic.addEventListener('change', onConsentChanged);
+        });
     {% endif %}
 </script>

@@ -1,16 +1,16 @@
 import * as React from 'react';
 
 import {IPreviewComponentProps, IUser} from 'superdesk-api';
-import {IUserSignOff} from '../../interfaces';
+import {IAuthorSignOffData} from '../../interfaces';
 import {superdesk} from '../../superdesk';
 
-import {loadUsersFromPublishSignOff, getSignOffDetails} from '../../utils';
+import {loadUsersFromPublishSignOff, getSignOffDetails, viewSignOffApprovalForm} from '../../utils';
 
 import {IconLabel, ToggleBox} from 'superdesk-ui-framework/react';
 import {SignOffListItem} from '../SignOffListItem';
 import {SignOffRequestDetails} from '../SignOffRequestDetails';
 
-type IProps = IPreviewComponentProps<IUserSignOff | null>;
+type IProps = IPreviewComponentProps<IAuthorSignOffData | null>;
 type ISignOffState = 'completed' | 'partially' | 'none';
 
 function getSignOffStateLabel(state: ISignOffState): string {
@@ -88,9 +88,18 @@ export class UserSignOffPreview extends React.PureComponent<IProps, IState> {
                                     user={this.state.users[signOffData.user_id]}
                                     readOnly={true}
                                     appendContentDivider={index < publishSignOff.sign_offs.length - 1}
-                                    fundingSource={signOffData.funding_source}
-                                    affiliation={signOffData.affiliation}
+                                    email={signOffData.author.email}
                                     date={signOffData.sign_date}
+                                    buttonProps={[{
+                                        type: 'success',
+                                        text: gettext('View Form'),
+                                        icon: 'external',
+                                        onClick: viewSignOffApprovalForm.bind(
+                                            undefined,
+                                            this.props.item._id,
+                                            signOffData.user_id,
+                                        )
+                                    }]}
                                 />
                             )
                         ))}

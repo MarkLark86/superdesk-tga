@@ -1,10 +1,16 @@
 import * as React from 'react';
 
 import {IUser} from 'superdesk-api';
-import {IEditorProps, IUserSignOff, IPublishSignOff} from '../../interfaces';
+import {IEditorProps, IAuthorSignOffData, IPublishSignOff} from '../../interfaces';
 import {superdesk} from '../../superdesk';
 
-import {hasUserSignedOff, getListAuthorIds, loadUsersFromPublishSignOff, getSignOffDetails} from '../../utils';
+import {
+    hasUserSignedOff,
+    getListAuthorIds,
+    loadUsersFromPublishSignOff,
+    getSignOffDetails,
+    viewSignOffApprovalForm,
+} from '../../utils';
 
 import {Button, ToggleBox} from 'superdesk-ui-framework/react';
 import {SignOffListItem} from '../SignOffListItem';
@@ -83,7 +89,7 @@ export class UserSignOffField extends React.Component<IEditorProps, IState> {
         });
     }
 
-    removeSignOff(sign_off_data: IUserSignOff) {
+    removeSignOff(signOffData: IAuthorSignOffData) {
         const {confirm, notify} = superdesk.ui;
         const {gettext} = superdesk.localization;
         const publishSignOff: IPublishSignOff | undefined = this.props.item.extra?.publish_sign_off;
@@ -100,7 +106,7 @@ export class UserSignOffField extends React.Component<IEditorProps, IState> {
             if (response) {
                 superdesk.httpRequestVoidLocal({
                     method: 'DELETE',
-                    path: `/sign_off_request/${this.props.item._id}/${sign_off_data.user_id}`,
+                    path: `/sign_off_request/${this.props.item._id}/${signOffData.user_id}`,
                 }).then(() => {
                     notify.success(gettext('Publishing sign off removed'));
                 }).catch((error: string) => {
@@ -148,21 +154,39 @@ export class UserSignOffField extends React.Component<IEditorProps, IState> {
                             {count: publishSignOff.sign_offs.length}
                         )}
                     >
-                        {publishSignOff.sign_offs.map((sign_off_data, index) => (
-                            this.state.users[sign_off_data.user_id] == null ? null : (
+                        {publishSignOff.sign_offs.map((signOffData, index) => (
+                            this.state.users[signOffData.user_id] == null ? null : (
                                 <SignOffListItem
                                     state="approved"
-                                    user={this.state.users[sign_off_data.user_id]}
+                                    user={this.state.users[signOffData.user_id]}
                                     readOnly={this.props.readOnly}
                                     appendContentDivider={index < publishSignOff.sign_offs.length - 1}
-                                    buttonProps={this.props.readOnly ? undefined : {
+                                    buttonProps={this.props.readOnly ? [{
+                                        type: 'success',
+                                        text: gettext('View Form'),
+                                        icon: 'external',
+                                        onClick: viewSignOffApprovalForm.bind(
+                                            undefined,
+                                            this.props.item._id,
+                                            signOffData.user_id
+                                        ),
+                                    }] : [{
+                                        type: 'success',
+                                        text: gettext('View Form'),
+                                        icon: 'external',
+                                        onClick: viewSignOffApprovalForm.bind(
+                                            undefined,
+                                            this.props.item._id,
+                                            signOffData.user_id
+                                        ),
+                                    }, {
+                                        type: 'default',
                                         text: gettext('Remove'),
                                         icon: 'trash',
-                                        onClick: this.removeSignOff.bind(this, sign_off_data)
-                                    }}
-                                    fundingSource={sign_off_data.funding_source}
-                                    affiliation={sign_off_data.affiliation}
-                                    date={sign_off_data.sign_date}
+                                        onClick: this.removeSignOff.bind(this, signOffData)
+                                    }]}
+                                    email={signOffData.author.email}
+                                    date={signOffData.sign_date}
                                 />
                             )
                         ))}
@@ -183,11 +207,11 @@ export class UserSignOffField extends React.Component<IEditorProps, IState> {
                                     user={this.state.users[pendingReview.user_id]}
                                     readOnly={this.props.readOnly}
                                     appendContentDivider={true}
-                                    buttonProps={this.props.readOnly ? undefined : {
+                                    buttonProps={this.props.readOnly ? undefined : [{
                                         text: gettext('Resend'),
                                         icon: 'refresh',
                                         onClick: this.sendSignOff.bind(this, [pendingReview.user_id]),
-                                    }}
+                                    }]}
                                     date={pendingReview.expires}
                                 />
                             )
@@ -200,11 +224,11 @@ export class UserSignOffField extends React.Component<IEditorProps, IState> {
                                     user={this.state.users[authorId]}
                                     readOnly={this.props.readOnly}
                                     appendContentDivider={true}
-                                    buttonProps={this.props.readOnly ? undefined : {
+                                    buttonProps={this.props.readOnly ? undefined : [{
                                         text: gettext('Send'),
                                         icon: 'assign',
                                         onClick: this.sendSignOff.bind(this, [authorId]),
-                                    }}
+                                    }]}
                                 />
                             )
                         ))}

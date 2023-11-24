@@ -22,8 +22,17 @@ export function hasUserSignedOff(item: IArticle): boolean {
 
         for (let i = 0; i < publishSignOff.sign_offs.length; i++) {
             const signOff = publishSignOff.sign_offs[i];
+            const {warrants, consent} = signOff;
 
-            if (signOff.consent_publish === false || signOff.consent_disclosure === false) {
+            if (warrants.no_copyright_infringements !== true ||
+                warrants.indemnify_360_against_loss !== true ||
+                warrants.ready_for_publishing !== true
+            ) {
+                return false;
+            } else if (consent.contact !== true ||
+                consent.personal_information !== true ||
+                consent.multimedia_usage != true
+            ) {
                 return false;
             } else if (signOff.funding_source.trim().length === 0 || signOff.affiliation.trim().length === 0) {
                 return false;
@@ -93,4 +102,14 @@ export function getSignOffDetails(item: IArticle, users: {[userId: string]: IUse
         pendingReviews,
         requestUser,
     };
+}
+
+export function viewSignOffApprovalForm(itemId: IArticle['_id'], userId: IUser['_id']) {
+    const baseUrl = superdesk.instance.config.server.url;
+
+    window.open(
+        `${baseUrl}/sign_off_requests/${itemId}/${userId}/view`,
+        'signOffForm',
+        'popup'
+    );
 }

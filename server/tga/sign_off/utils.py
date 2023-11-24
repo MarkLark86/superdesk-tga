@@ -1,9 +1,8 @@
 from typing import Dict, List, Optional, Any
-from typing_extensions import TypedDict
 import pathlib
 from copy import deepcopy
 import re
-from datetime import datetime, timedelta
+from datetime import timedelta
 from time import time
 
 from authlib.jose import JsonWebToken
@@ -18,6 +17,14 @@ from superdesk.errors import SuperdeskApiError
 from superdesk.utc import utcnow
 from superdesk.notification import push_notification
 
+from tga.types import (
+    SignOffAuthor,
+    SignOffWarrants,
+    SignOffConsent,
+    AuthorSignOffData,
+    AuthorSignOffRequest,
+    PublishSignOffData,
+)
 from tga.author_profiles import get_author_profiles_by_user_id
 from .form import UserSignOffForm
 
@@ -25,30 +32,7 @@ from .form import UserSignOffForm
 JWT_ALGORITHM = "HS256"
 
 
-class AuthorSignOffData(TypedDict):
-    user_id: ObjectId
-    sign_date: datetime
-    version_signed: int
-    funding_source: str
-    affiliation: str
-    consent_publish: bool
-    consent_disclosure: bool
-
-
-class AuthorSignOffRequest(TypedDict):
-    user_id: ObjectId
-    sent: datetime
-    expires: datetime
-
-
-class PublishSignOffData(TypedDict):
-    requester_id: ObjectId
-    request_sent: datetime
-    pending_reviews: List[AuthorSignOffRequest]
-    sign_offs: List[AuthorSignOffData]
-
-
-def _get_publish_sign_off_data(item: Dict[str, Any]) -> Optional[PublishSignOffData]:
+def get_publish_sign_off_data(item: Dict[str, Any]) -> Optional[PublishSignOffData]:
     if (item.get("extra") or {}).get("publish_sign_off"):
         if item["extra"]["publish_sign_off"].get("requester_id"):
             # This is the newer format
@@ -67,8 +51,40 @@ def _get_publish_sign_off_data(item: Dict[str, Any]) -> Optional[PublishSignOffD
             return publish_sign_off
         elif item["extra"]["publish_sign_off"].get("user_id"):
             # This is the legacy format (AuthorSignOffData), change it to PublishSignOffData
-            author_sign_off: AuthorSignOffData = item["extra"]["publish_sign_off"]
-            author_sign_off["user_id"] = ObjectId(author_sign_off["user_id"])
+            legacy_sign_off = item["extra"]["publish_sign_off"]
+            user_id = ObjectId(legacy_sign_off["user_id"])
+
+            profiles = get_author_profiles_by_user_id([user_id])
+            author_profile = (profiles.get(user_id) or {}).get("extra") or {}
+
+            author_sign_off = AuthorSignOffData(
+                user_id=user_id,
+                sign_date=legacy_sign_off["sign_date"],
+                version_signed=item.get("version"),
+                article_name="",
+                funding_source=legacy_sign_off.get("funding_source"),
+                affiliation=legacy_sign_off.get("affiliation"),
+                copyright_terms="",
+                author=SignOffAuthor(
+                    name=author_profile.get("profile_name") or "",
+                    title=author_profile.get("profile_title") or "",
+                    institute=author_profile.get("profile_institute") or "",
+                    email=author_profile.get("profile_email") or "",
+                    country=author_profile.get("profile_country") or "",
+                    orcid_id=author_profile.get("profile_orcid_id") or "",
+                ),
+                warrants=SignOffWarrants(
+                    no_copyright_infringements=True,
+                    indemnify_360_against_loss=True,
+                    ready_for_publishing=True,
+                ),
+                consent=SignOffConsent(
+                    signature="",
+                    contact=True,
+                    personal_information=True,
+                    multimedia_usage=True,
+                ),
+            )
 
             return PublishSignOffData(
                 requester_id=author_sign_off["user_id"],
@@ -81,7 +97,7 @@ def _get_publish_sign_off_data(item: Dict[str, Any]) -> Optional[PublishSignOffD
 
 
 def fix_item_publish_sign_off_format(item: Dict[str, Any]):
-    publish_sign_off = _get_publish_sign_off_data(item)
+    publish_sign_off = get_publish_sign_off_data(item)
     if publish_sign_off is not None:
         item["extra"]["publish_sign_off"] = publish_sign_off
 
@@ -97,7 +113,7 @@ def fix_archive_lock_sign_off_formats(items):
 
 
 def fix_item_on_archive_update(updates: Dict[str, Any], original: Dict[str, Any]):
-    publish_sign_off = _get_publish_sign_off_data(updates) or _get_publish_sign_off_data(original)
+    publish_sign_off = get_publish_sign_off_data(updates) or get_publish_sign_off_data(original)
     if publish_sign_off is not None:
         updates.setdefault("extra", deepcopy(original.get("extra") or {}))
         updates["extra"]["publish_sign_off"] = publish_sign_off
@@ -139,7 +155,7 @@ def modify_asset_urls(item, author_id: ObjectId):
 
 
 def remove_sign_off_from_item(item: Dict[str, Any], user_id: ObjectId):
-    publish_sign_off = _get_publish_sign_off_data(item)
+    publish_sign_off = get_publish_sign_off_data(item)
 
     if publish_sign_off is None:
         raise SuperdeskApiError.badRequestError(_("No sign offs found on the item"))
@@ -152,7 +168,7 @@ def remove_sign_off_from_item(item: Dict[str, Any], user_id: ObjectId):
 
 def update_item_publish_approval(item: Dict[str, Any], form: UserSignOffForm):
     user_id = ObjectId(form.user_id.data)
-    publish_sign_off = _get_publish_sign_off_data(item) or PublishSignOffData(
+    publish_sign_off = get_publish_sign_off_data(item) or PublishSignOffData(
         requester_id=user_id, request_sent=utcnow(), pending_reviews=[], sign_offs=[]
     )
 
@@ -162,12 +178,31 @@ def update_item_publish_approval(item: Dict[str, Any], form: UserSignOffForm):
     ] + [
         AuthorSignOffData(
             user_id=user_id,
-            funding_source=form.funding_source.data,
-            affiliation=form.affiliation.data,
-            consent_publish=form.consent_publish.data,
-            consent_disclosure=form.consent_disclosure.data,
             sign_date=utcnow(),
             version_signed=form.version_signed.data,
+            article_name=form.article_name.data,
+            funding_source=form.funding_source.data,
+            affiliation=form.affiliation.data,
+            copyright_terms=form.copyright_terms.data,
+            author=SignOffAuthor(
+                name=form.author_name.data,
+                title=form.author_title.data,
+                institute=form.author_institute.data,
+                email=form.author_email.data,
+                country=form.author_country.data,
+                orcid_id=form.author_orcid_id.data,
+            ),
+            warrants=SignOffWarrants(
+                no_copyright_infringements=form.warrants_no_copyright_infringements.data,
+                indemnify_360_against_loss=form.warrants_indemnify_360_against_loss.data,
+                ready_for_publishing=form.warrants_ready_for_publishing.data,
+            ),
+            consent=SignOffConsent(
+                signature=form.consent_signature.data,
+                contact=form.consent_contact.data,
+                personal_information=form.consent_personal_information.data,
+                multimedia_usage=form.consent_multimedia_usage.data,
+            ),
         )
     ]
 
@@ -193,7 +228,7 @@ def _update_publish_sign_off(original: Dict[str, Any], publish_sign_off: Publish
 
 
 def update_item_with_request_details(item: Dict[str, Any], current_user_id: ObjectId, user_ids: List[ObjectId]):
-    publish_sign_off = _get_publish_sign_off_data(item)
+    publish_sign_off = get_publish_sign_off_data(item)
     if publish_sign_off is None:
         publish_sign_off = PublishSignOffData(
             requester_id=current_user_id, request_sent=utcnow(), pending_reviews=[], sign_offs=[]
