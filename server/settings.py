@@ -196,3 +196,6 @@ CONTENTAPI_INSTALLED_APPS = [module for module in CONTENTAPI_INSTALLED_APPS if m
     "tga.content_api.items",
     "tga.content_api.author_profiles",
 ]
+
+# Disable purging of publish queue
+PUBLISH_QUEUE_EXPIRY_MINUTES = 0
