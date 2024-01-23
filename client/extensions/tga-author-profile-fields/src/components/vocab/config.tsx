@@ -14,8 +14,8 @@ function getVocabularies(): Promise<Array<IVocabulary>> {
         {field: 'display_name', direction: 'ascending'},
         {
             $and: [
-                {field_type: {$exists: false, $eq: null}},
-                {custom_field_type: {$exists: false, $eq: null}},
+                {field_type: null},
+                {custom_field_type: null},
             ],
         }
     ).then((vocabularies) => {
