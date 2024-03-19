@@ -5,7 +5,6 @@ export interface IAuthorSignOffData {
     sign_date: string;
     version_signed: number;
 
-    article_name: string;
     funding_source: string;
     affiliation: string;
     copyright_terms: string;

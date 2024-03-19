@@ -12,9 +12,6 @@ See below a copy of the answers you provided:
 Thank you for authoring an article for 360info. We require you to agree to the following
 terms and provide the information requested before we can publish your article.
 
-*Please add the name of the article:*
-{{ form.article_name.data }}
-
 About the article
 Please provide the following information regarding the above-mentioned article.
 The information you provide may be published with the article.

@@ -18,22 +18,6 @@
         terms and provide the information requested before we can publish your article.
     </p>
 
-    <div class="form__row sd-margin-t--2">
-        <div class="sd-input sd-input--required">
-            <label class="sd-input__label">
-                Please add the name of the article
-            </label>
-            <div class="sd-input__input-container">
-                {{ form.article_name(
-                    class="sd-input__input",
-                    id="article_name",
-                    required="true",
-                    readonly=readonly
-                ) }}
-            </div>
-        </div>
-    </div>
-
     <h2>About the article</h2>
     <p>
         Please provide the following information regarding the above-mentioned article.
@@ -289,7 +273,7 @@
     <div class="form__row sd-margin-t--2">
         <div class="sd-input sd-input--required">
             <label class="sd-input__label">
-                I agree to abide by these terms.
+                I agree to abide by these terms. (Please write your full name)
             </label>
             <div class="sd-input__input-container">
                 {{ form.consent_signature(

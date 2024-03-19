@@ -9,7 +9,6 @@ class UserSignOffForm(FlaskForm):
     version_signed = HiddenField("Item Version Signed")
     sign_date = HiddenField("Signed Date")
 
-    article_name = StringField("Article Name", validators=[DataRequired()])
     funding_source = StringField("Funding Source", validators=[DataRequired()])
     affiliation = StringField("Affiliation", validators=[DataRequired()])
     copyright_terms = StringField("Copyright Terms", validators=[DataRequired()])

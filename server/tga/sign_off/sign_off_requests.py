@@ -130,7 +130,6 @@ def view_sign_off_request(item_id, user_id_str):
         user_id=user_id_str,
         version_signed=author_sign_off["version_signed"],
         sign_date=author_sign_off["sign_date"],
-        article_name=author_sign_off["article_name"],
         funding_source=author_sign_off["funding_source"],
         affiliation=author_sign_off["affiliation"],
         copyright_terms=author_sign_off["copyright_terms"],

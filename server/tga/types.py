@@ -32,7 +32,6 @@ class AuthorSignOffData(TypedDict):
     sign_date: datetime
     version_signed: int
 
-    article_name: str
     funding_source: str
     affiliation: str
     copyright_terms: str
