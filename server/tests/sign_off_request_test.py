@@ -69,7 +69,7 @@ class SignOffRequestTestCase(TestCase):
         for email_sent in outbox:
             assert "'Header Of The Informational Article'" in email_sent.subject
 
-            approval_url = "https://localhost/api/sign_off_requests/approve?token="
+            approval_url = "http://localhost/api/sign_off_requests/approve?token="
             assert approval_url in email_sent.body
             assert "link expires after 24 hours" in email_sent.body
 
