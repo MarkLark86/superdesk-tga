@@ -19,7 +19,7 @@ export class ProfileTextFieldConfig extends React.PureComponent<IProps> {
         const {gettext} = superdesk.localization;
 
         return (
-            <Spacer type="vertical" spacing="medium">
+            <Spacer v={true} gap="8">
                 <Switch
                     label={{content: gettext('Use Editor 3')}}
                     value={config?.use_editor_3 == true}

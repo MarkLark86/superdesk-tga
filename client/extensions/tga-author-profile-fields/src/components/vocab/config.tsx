@@ -59,7 +59,7 @@ export class VocabularyFieldConfig extends React.Component<IProps, IState> {
         const {gettext} = superdesk.localization;
 
         return (
-            <Spacer type="vertical" spacing="medium">
+            <Spacer v={true} gap="8">
                 <Select
                     value={config?.vocabulary_name}
                     label={gettext('Vocabulary')}

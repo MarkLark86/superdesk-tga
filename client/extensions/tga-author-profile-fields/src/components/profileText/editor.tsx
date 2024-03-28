@@ -1,12 +1,14 @@
 import * as React from 'react';
 
-import {IUser} from 'superdesk-api';
+import {IEditorComponentProps, IUser} from 'superdesk-api';
 import {superdesk} from '../../superdesk';
-import {IProfileTextFieldProps} from './interfaces';
+import {IProfileTextFieldConfig, IProfileTextValue} from './interfaces';
 import {Input} from 'superdesk-ui-framework/react'
 
-export class ProfileTextField extends React.PureComponent<IProfileTextFieldProps> {
-    constructor(props: IProfileTextFieldProps) {
+type IProps = IEditorComponentProps<IProfileTextValue, IProfileTextFieldConfig, never>;
+
+export class ProfileTextField extends React.PureComponent<IProps> {
+    constructor(props: IProps) {
         super(props);
 
         this.onProfileIDChanged = this.onProfileIDChanged.bind(this);
@@ -25,16 +27,16 @@ export class ProfileTextField extends React.PureComponent<IProfileTextFieldProps
 
         switch (this.props.fieldId) {
         case 'profile_first_name':
-            this.props.setValue(user.first_name || '');
+            this.props.onChange(user.first_name || '');
             break;
         case 'profile_last_name':
-            this.props.setValue(user.last_name || '');
+            this.props.onChange(user.last_name || '');
             break;
         case 'profile_email':
-            this.props.setValue(user.email || '');
+            this.props.onChange(user.email || '');
             break;
         case 'profile_biography':
-            this.props.setValue(user.biography || '');
+            this.props.onChange(user.biography || '');
             break;
         }
     }
@@ -46,7 +48,7 @@ export class ProfileTextField extends React.PureComponent<IProfileTextFieldProps
             <Editor3Html
                 key={this.props.item.extra?.profile_id}
                 value={this.props.value ?? ''}
-                onChange={this.props.setValue}
+                onChange={this.props.onChange}
                 readOnly={this.props.readOnly}
             />
         ) : (
@@ -55,7 +57,7 @@ export class ProfileTextField extends React.PureComponent<IProfileTextFieldProps
                 value={this.props.value}
                 type="text"
                 disabled={this.props.readOnly}
-                onChange={this.props.setValue}
+                onChange={this.props.onChange}
             />
         );
     }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import {IPreviewComponentProps, IUser} from 'superdesk-api';
-import {IAuthorSignOffData} from '../../interfaces';
+import {IPreviewComponentProps, IUser, ICommonFieldConfig} from 'superdesk-api';
+import {IPublishSignOffValue} from '../../interfaces';
 import {superdesk} from '../../superdesk';
 
 import {loadUsersFromPublishSignOff, getSignOffDetails, viewSignOffApprovalForm} from '../../utils';
@@ -10,7 +10,7 @@ import {IconLabel, ToggleBox} from 'superdesk-ui-framework/react';
 import {SignOffListItem} from '../SignOffListItem';
 import {SignOffRequestDetails} from '../SignOffRequestDetails';
 
-type IProps = IPreviewComponentProps<IAuthorSignOffData | null>;
+type IProps = IPreviewComponentProps<IPublishSignOffValue, ICommonFieldConfig>;
 type ISignOffState = 'completed' | 'partially' | 'none';
 
 function getSignOffStateLabel(state: ISignOffState): string {

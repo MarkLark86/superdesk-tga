@@ -4,11 +4,10 @@ import {ILiveResourcesProps, IRestApiResponse, IVocabulary, IVocabularyItem, IEd
 import {superdesk} from '../../superdesk';
 
 import {Autocomplete} from 'superdesk-ui-framework/react';
-import {IVocabularyFieldConfig} from "./interfaces";
+import {IVocabularyFieldConfig, IVocabularyFieldValue} from "./interfaces";
 
 
-type IVocabularyFieldValue = IVocabularyItem | null | undefined;
-type IVocabularyFieldProps = IEditorComponentProps<IVocabularyFieldValue, IVocabularyFieldConfig>
+type IVocabularyFieldProps = IEditorComponentProps<IVocabularyFieldValue, IVocabularyFieldConfig, never>;
 const NEW_ITEM_PREFIX = '_new:';
 
 export class VocabularyTypeaheadField extends React.PureComponent<IVocabularyFieldProps> {
@@ -58,7 +57,7 @@ export class VocabularyTypeaheadField extends React.PureComponent<IVocabularyFie
                             onChange={(val) => {
                                 if (val.length === 0) {
                                     // Remove the selected item
-                                    this.props.setValue(null);
+                                    this.props.onChange(null);
                                 }
                             }}
                             onSelect={(value: any) => {
@@ -69,7 +68,7 @@ export class VocabularyTypeaheadField extends React.PureComponent<IVocabularyFie
                                     newItem.qcode = newItem.name.replace(/ /g, '_');
                                 }
 
-                                this.props.setValue(newItem);
+                                this.props.onChange(newItem);
                             }}
                             disabled={this.props.readOnly}
                         />

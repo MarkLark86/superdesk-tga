@@ -1,4 +1,4 @@
-import {IEditorComponentProps, IUser} from 'superdesk-api';
+import {IEditorComponentProps, IUser, ICommonFieldConfig} from 'superdesk-api';
 
 export interface IAuthorSignOffData {
     user_id: IUser['_id'];
@@ -42,4 +42,6 @@ export interface IPublishSignOff {
     sign_offs: Array<IAuthorSignOffData>;
 }
 
-export type IEditorProps = IEditorComponentProps<IPublishSignOff | null, {}>;
+export type IPublishSignOffValue = IPublishSignOff | null;
+
+export type IEditorProps = IEditorComponentProps<IPublishSignOffValue, ICommonFieldConfig, never>;

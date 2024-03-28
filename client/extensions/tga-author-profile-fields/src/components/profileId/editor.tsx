@@ -1,9 +1,10 @@
 import * as React from 'react';
 
-import {IUser, IEditorComponentProps} from 'superdesk-api';
+import {ICommonFieldConfig, IEditorComponentProps, IUser} from 'superdesk-api';
 import {superdesk} from '../../superdesk';
 
-type IProps = IEditorComponentProps<IUser['_id'] | undefined, {}>
+export type IProfileIdValue = string | undefined;
+type IProps = IEditorComponentProps<IProfileIdValue, ICommonFieldConfig, never>;
 
 export class ProfileIDField extends React.PureComponent<IProps> {
     private _mounted: boolean = false;
@@ -31,7 +32,7 @@ export class ProfileIDField extends React.PureComponent<IProps> {
 
     changeProfileId(user: IUser) {
         if (this._mounted) {
-            this.props.setValue(user._id);
+            this.props.onChange(user._id);
             window.dispatchEvent(new CustomEvent('content--custom-profile-id--changed', {detail: user}));
         }
     }
@@ -46,6 +47,7 @@ export class ProfileIDField extends React.PureComponent<IProps> {
                 disabled={this.props.readOnly}
                 autoFocus={false}
                 horizontalSpacing={false}
+                clearable={false}
             />
         );
     }

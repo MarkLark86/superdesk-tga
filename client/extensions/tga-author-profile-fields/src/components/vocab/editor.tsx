@@ -2,14 +2,13 @@ import * as React from 'react';
 
 import {ILiveResourcesProps, IRestApiResponse, IVocabulary, IVocabularyItem, IEditorComponentProps} from 'superdesk-api';
 import {superdesk} from '../../superdesk';
-import {IVocabularyFieldConfig} from './interfaces';
+import {IVocabularyFieldConfig, IVocabularyFieldArrayValue} from './interfaces';
 
 import {Select, Option, MultiSelect, Label} from 'superdesk-ui-framework/react';
 
-type IVocabularyFieldValue = IVocabularyItem | Array<IVocabularyItem> | null | undefined;
-type IVocabularyFieldProps = IEditorComponentProps<IVocabularyFieldValue, IVocabularyFieldConfig>
+type IVocabularyFieldProps = IEditorComponentProps<IVocabularyFieldArrayValue, IVocabularyFieldConfig, never>;
 
-function getValueAsArray(value: IVocabularyFieldValue): Array<IVocabularyItem> {
+function getValueAsArray(value: IVocabularyFieldArrayValue): Array<IVocabularyItem> {
     if (value == null) {
         return [];
     } else if (!Array.isArray(value)) {
@@ -19,7 +18,7 @@ function getValueAsArray(value: IVocabularyFieldValue): Array<IVocabularyItem> {
     return value;
 }
 
-function getValueAsDictionary(value: IVocabularyFieldValue): IVocabularyItem | null {
+function getValueAsDictionary(value: IVocabularyFieldArrayValue): IVocabularyItem | null {
     if (value == null) {
         return null;
     } else if (Array.isArray(value)) {
@@ -55,7 +54,7 @@ export class VocabularyField extends React.PureComponent<IVocabularyFieldProps> 
                             placeholder={'Select an item'}
                             optionLabel={(item) => item?.name || ''}
                             onChange={(newValues) => {
-                                this.props.setValue(newValues);
+                                this.props.onChange(newValues);
                             }}
                             filter={true}
                             labelHidden={true}
@@ -79,7 +78,7 @@ export class VocabularyField extends React.PureComponent<IVocabularyFieldProps> 
                     ) : (
                         <Select
                             onChange={(qcode) => {
-                                this.props.setValue(items.find((item) => item.qcode === qcode));
+                                this.props.onChange(items.find((item) => item.qcode === qcode));
                             }}
                             value={getValueAsDictionary(this.props.value)?.qcode}
                             inlineLabel={true}

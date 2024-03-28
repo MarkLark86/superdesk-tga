@@ -1,11 +1,14 @@
 import * as React from 'react';
 
-import {IPreviewComponentProps, IVocabularyItem} from 'superdesk-api';
+import {IPreviewComponentProps} from 'superdesk-api';
+import {IVocabularyFieldArrayValue, IVocabularyFieldConfig} from './interfaces';
 import {SimpleList, SimpleListItem, Label} from 'superdesk-ui-framework/react';
 
-export class VocabularyPreview extends React.PureComponent<IPreviewComponentProps<IVocabularyItem | Array<IVocabularyItem>>> {
+type IProps = IPreviewComponentProps<IVocabularyFieldArrayValue, IVocabularyFieldConfig>;
+
+export class VocabularyPreview extends React.PureComponent<IProps> {
     render() {
-        return (
+        return this.props.value == null || this.props.value.length === 0 ? null : (
             <div className="form__row form__row--small-padding">
                 {!Array.isArray(this.props.value) ? (
                     <p className="sd-text__normal">

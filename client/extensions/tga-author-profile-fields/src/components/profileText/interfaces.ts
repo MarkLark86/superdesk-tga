@@ -1,8 +1,8 @@
-import {IEditorComponentProps} from 'superdesk-api';
+import {ICommonFieldConfig} from 'superdesk-api';
 
-export interface IProfileTextFieldConfig {
+export interface IProfileTextFieldConfig extends ICommonFieldConfig {
     use_editor_3: boolean;
     exclude_from_content_api: boolean;
 }
 
-export type IProfileTextFieldProps = IEditorComponentProps<string | undefined, IProfileTextFieldConfig>;
+export type IProfileTextValue = string | undefined;
