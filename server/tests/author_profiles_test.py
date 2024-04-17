@@ -199,6 +199,7 @@ CONTENT_TYPES = [
                 "enabled": True,
                 "required": True,
             },
+            "profile_id": None,
         },
         "schema": {
             "slugline": {
@@ -207,6 +208,7 @@ CONTENT_TYPES = [
                 "maxlength": 24,
                 "nullable": False,
             },
+            "profile_id": None,
         },
     },
     {

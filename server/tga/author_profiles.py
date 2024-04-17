@@ -32,7 +32,7 @@ def _get_content_profile_custom_fields(original: Dict[str, Any]) -> List[Dict[st
     return [
         field
         for field in get_resource_service("vocabularies").get_extra_fields()
-        if field["_id"] in content_profile["schema"].keys()
+        if (content_profile["editor"].get(field["_id"]) or {}).get("enabled")
     ]
 
 
