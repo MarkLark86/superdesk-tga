@@ -8,19 +8,9 @@ from content_api.app import get_app
 from content_api.publish import MONGO_PREFIX
 
 from settings import CONTENTAPI_INSTALLED_APPS
-from .author_profiles_test import VOCABULARIES, CONTENT_TYPES, SDGS
+from .fixtures.vocabularies import VOCABULARIES, CONTENT_TYPES, SDGS, TEST_USER
 from tga.author_profiles import AUTHOR_PROFILE_ROLE
 
-TEST_USER = {
-    "_id": "abcd123",
-    "username": "foobar",
-    "first_name": "Foo",
-    "last_name": "Bar",
-    "user_type": "user",
-    "display_name": "Foo Bar",
-    "is_enabled": True,
-    "is_active": True,
-}
 
 TEST_SUBSCRIBER = {"_id": "sub1"}
 

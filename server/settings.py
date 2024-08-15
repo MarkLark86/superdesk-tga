@@ -11,6 +11,7 @@
 
 from pathlib import Path
 from superdesk.default_settings import strtobool, env
+from superdesk.resource import not_analyzed, text_with_keyword, string_with_analyzer
 from content_api.app.settings import CONTENTAPI_INSTALLED_APPS
 
 ABS_PATH = str(Path(__file__).resolve().parent)
@@ -204,13 +205,49 @@ SIGN_OFF_REQUESTS_EXPIRATION = 86400  # 1 day in seconds
 # Disable purging of publish queue
 PUBLISH_QUEUE_EXPIRY_MINUTES = 0
 
+es_text = {"type": "string"}
+cv_item = {
+    "type": "object",
+    "properties": {
+        "name": text_with_keyword,
+        "qcode": not_analyzed,
+    },
+}
+
 SCHEMA_UPDATE = {
     "archive": {
         "extra": {
             "type": "dict",
             "schema": {},
-            "mapping": {"type": "object", "dynamic": False, "properties": {"university": {"type": "string"}}},
+            "mapping": {
+                "type": "object",
+                "dynamic": False,
+                "properties": {
+                    "profile_id": not_analyzed,
+                    "profile_first_name": es_text,
+                    "profile_last_name": es_text,
+                    "profile_title": cv_item,
+                    "profile_job_title": cv_item,
+                    "profile_email": es_text,
+                    "profile_university": cv_item,
+                    "profile_project": cv_item,
+                    "profile_country": {
+                        "type": "object",
+                        "properties": {
+                            "name": text_with_keyword,
+                            "qcode": not_analyzed,
+                            "region": text_with_keyword,
+                        },
+                    },
+                    "profile_biography": string_with_analyzer,
+                    "profile_gender": cv_item,
+                    "profile_age_group": cv_item,
+                    "profile_orcid_id": es_text,
+                    "profile_sdg": cv_item,
+                    "profile_sdgs": cv_item,
+                },
+            },
             "allow_unknown": True,
-        }
-    }
+        },
+    },
 }
