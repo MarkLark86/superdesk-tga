@@ -54,7 +54,7 @@ def _content_profile_contains_custom_profile_id(custom_fields: List[Dict[str, An
 
 def _set_article_fields(updates: Dict[str, Any]):
     extra = updates.get("extra") or {}
-    updates["slugline"] = extra.get("profile_first_name", "") + " " + extra.get("profile_last_name", "")
+    updates["slugline"] = (extra.get("profile_first_name") or "") + " " + (extra.get("profile_last_name") or "")
 
     if not updates.get("headline"):
         updates["headline"] = "Author Profile"
