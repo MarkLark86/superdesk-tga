@@ -214,40 +214,45 @@ cv_item = {
     },
 }
 
-SCHEMA_UPDATE = {
-    "archive": {
-        "extra": {
-            "type": "dict",
-            "schema": {},
-            "mapping": {
-                "type": "object",
-                "dynamic": False,
-                "properties": {
-                    "profile_id": not_analyzed,
-                    "profile_first_name": es_text,
-                    "profile_last_name": es_text,
-                    "profile_title": cv_item,
-                    "profile_job_title": cv_item,
-                    "profile_email": es_text,
-                    "profile_university": cv_item,
-                    "profile_project": cv_item,
-                    "profile_country": {
-                        "type": "object",
-                        "properties": {
-                            "name": text_with_keyword,
-                            "qcode": not_analyzed,
-                            "region": text_with_keyword,
-                        },
+extra_schema = {
+    "extra": {
+        "type": "dict",
+        "schema": {},
+        "mapping": {
+            "type": "object",
+            "dynamic": False,
+            "properties": {
+                "profile_id": not_analyzed,
+                "profile_first_name": es_text,
+                "profile_last_name": es_text,
+                "profile_title": cv_item,
+                "profile_job_title": cv_item,
+                "profile_email": es_text,
+                "profile_university": cv_item,
+                "profile_project": cv_item,
+                "profile_country": {
+                    "type": "object",
+                    "properties": {
+                        "name": text_with_keyword,
+                        "qcode": not_analyzed,
+                        "region": text_with_keyword,
                     },
-                    "profile_biography": string_with_analyzer,
-                    "profile_gender": cv_item,
-                    "profile_age_group": cv_item,
-                    "profile_orcid_id": es_text,
-                    "profile_sdg": cv_item,
-                    "profile_sdgs": cv_item,
                 },
+                "profile_biography": string_with_analyzer,
+                "profile_gender": cv_item,
+                "profile_age_group": cv_item,
+                "profile_orcid_id": es_text,
+                "profile_sdg": cv_item,
+                "profile_sdgs": cv_item,
             },
-            "allow_unknown": True,
         },
+        "allow_unknown": True,
     },
+}
+
+SCHEMA_UPDATE = {
+    "archive": extra_schema,
+    "archived": extra_schema,
+    "published": extra_schema,
+    "items": extra_schema,  # ContentAPI
 }
